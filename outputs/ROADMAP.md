@@ -448,10 +448,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## C1. OKX write için iki aşamalı onay state machine'i kur
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: gate every OKX write behind explicit confirmation`
+- Kanıt: `docs/evidence/write-authorization-state-machine-2026-10-16.md`; 6 state-machine testi; onaysız writer 0 çağrı; expiry/replay/reject/network uncertainty
 
 **Bitince**
 
@@ -932,6 +932,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | B6   | DONE    | `feat: enforce deterministic user risk policy gate`         | 14 karar/sınır testi; tüm reason code'lar; fail-closed policy; iki gerçek snapshot REJECT/ACCEPT ayrışması; 82 repo testi            | B7                        |
 | 2026-10-16 | Codex | B7   | DONE    | `feat: constrain LLM to policy parsing and explanation`     | Strict JSON Schema + yerel doğrulama; teyit alanları; injection/bypass; canonical sayı template'i; fallback; 9 test; 91 repo testi   | B8                        |
 | 2026-10-16 | Codex | B8   | DONE    | `feat: orchestrate live OKX risk analysis end to end`       | Dört canlı OKX kaynağı; canonical report; correlation trace; typed failure; 91 Vitest + 4 invariant; typecheck/lint/build            | C1                        |
+| 2026-10-16 | Codex | C1   | DONE    | `feat: gate every OKX write behind explicit confirmation`   | 6 state-machine testi; ACCEPT-only hazırlık; tek kullanımlık onay; expired/reject/double-submit/network uncertainty; writer gate     | C2                        |
 
 ## 7. Yeni agent için devam kontrolü
 
