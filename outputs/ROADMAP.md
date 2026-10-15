@@ -135,10 +135,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A3. Gerçek OKX TR DCD erişimini doğrula — KILL GATE 1
 
-- [ ] Durum: `BLOCKED`
+- [x] Durum: `DONE`
 - Sahip: Codex
-- Commit: —
-- Kanıt: OKX TR kimlik doğrulaması 2026-10-15 tarihinde tamamlandı; platform API anahtarı oluşturmayı inceleme/onay tamamlanana kadar açmadı (bildirilen süre: 24 saate kadar). Mock veya farklı bölge kullanılmadı.
+- Commit: `spike: verify live OKX TR DCD product access`
+- Kanıt: `docs/evidence/okx-tr-dcd-live-2026-10-15.md`; `docs/architecture/0002-okx-tr-dcd-access.md`. Live/read-only `pairs` ve BTC/USDT Buy Low `products` exit 0; gerçek productId/strike/expiry/API timestamp doğrulandı. Olmayan credential profili secret basmadan fail etti; demo DCD read `50026` ile reddedildi. CLI 1.4.8'de quote-only eylemi olmadığı, `quote-and-buy` işleminin write olduğu kaydedildi ve çağrılmadı.
 
 **Bitince**
 
@@ -185,10 +185,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A5. Avalanche Fuji x402 yolunu uçtan uca doğrula — KILL GATE 3
 
-- [ ] Durum: `IN_PROGRESS`
+- [ ] Durum: `BLOCKED`
 - Sahip: Codex
-- Commit: —
-- Kanıt: —
+- Commit: `c5fe6e2` (`spike: establish Fuji x402 payment boundary`; settlement checkpoint'i)
+- Kanıt: Canlı Ultravioleta `/supported` yanıtı Fuji `eip155:43113` + test USDC desteğini doğruladı; yerel Hono endpoint gerçek facilitator ile `402` ve `PAYMENT-REQUIRED` döndürdü; 13 Fuji/ağ/API/istemci testi geçiyor. Payer `0x9a2b5BdFd3CA23456957882695Bbf81510430853` henüz test AVAX ve test USDC bakımından boş; gerçek settlement bekliyor.
 
 **Bitince**
 
@@ -884,11 +884,11 @@ Servis metadata, versioned schema, rate/price disclosure, security/review belgel
 
 ## 4. Ana riskler ve fallback
 
-| Risk | İlk ortaya çıkaran adım | Fallback |
-|---|---|---|
-| OKX TR private DCD read erişimi yok | A3 | Mentor/OKX ile endpoint/account uygunluğu çözülür; çözülmezse mock yapılmaz ve fikir pivot edilir |
-| Likit/yakın option proxy yok | A4 | Başka gerçek BTC/USDT DCD seçilir; sistematik yoksa fair-value çekirdeği bırakılır |
-| x402 facilitator/Fuji akışı çalışmıyor | A5 | Bir alternatif resmî facilitator denenir; yine yoksa organizer eligibility teyidi ve dürüst kapsam daraltma |
+| Risk                                   | İlk ortaya çıkaran adım | Fallback                                                                                                    |
+| -------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------- |
+| OKX TR private DCD read erişimi yok    | A3                      | Mentor/OKX ile endpoint/account uygunluğu çözülür; çözülmezse mock yapılmaz ve fikir pivot edilir           |
+| Likit/yakın option proxy yok           | A4                      | Başka gerçek BTC/USDT DCD seçilir; sistematik yoksa fair-value çekirdeği bırakılır                          |
+| x402 facilitator/Fuji akışı çalışmıyor | A5                      | Bir alternatif resmî facilitator denenir; yine yoksa organizer eligibility teyidi ve dürüst kapsam daraltma |
 
 ## 5. Sapma protokolü
 
@@ -901,6 +901,7 @@ Tamamlanan eski adımlar yeniden yazılmaz. `ROADMAP.md` sonuna şu kayıt eklen
 
 ```markdown
 ## Sapma — YYYY-MM-DD, adım X
+
 Neydi: ...
 Ne çıktı: ... (kanıt/link)
 Geri alınan: ...
@@ -915,11 +916,12 @@ Aynı adım üç farklı nedenle başarısız olursa aynı yaklaşım dördünc�
 
 Her tamamlanan/engellenen adım için tek satır ekle:
 
-| Tarih | Agent | Adım | Durum | Commit | Doğrulama/kanıt | Sonraki adım |
-|---|---|---|---|---|---|---|
-| 2026-10-15 | Codex | A1 | DONE | `docs: establish project source of truth and agent handoff` | Kök belge/agent sözleşmesi kontrolü; vibe-coding kaynak notu; bağımsız repo | A2 |
-| 2026-10-15 | Codex | A2 | DONE | `build: pin verified toolchain and project workspace` | Kilitli kurulum; lint/typecheck/4 invariant test/production build; Prettier; production audit | A3 |
-| 2026-10-15 | Codex | A3 | BLOCKED | — | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı | A5; onay gelince A3'e dön |
+| Tarih      | Agent | Adım | Durum   | Commit                                                      | Doğrulama/kanıt                                                                                                                | Sonraki adım              |
+| ---------- | ----- | ---- | ------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| 2026-10-15 | Codex | A1   | DONE    | `docs: establish project source of truth and agent handoff` | Kök belge/agent sözleşmesi kontrolü; vibe-coding kaynak notu; bağımsız repo                                                    | A2                        |
+| 2026-10-15 | Codex | A2   | DONE    | `build: pin verified toolchain and project workspace`       | Kilitli kurulum; lint/typecheck/4 invariant test/production build; Prettier; production audit                                  | A3                        |
+| 2026-10-15 | Codex | A3   | BLOCKED | —                                                           | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı                                               | A5; onay gelince A3'e dön |
+| 2026-10-15 | Codex | A3   | DONE    | `spike: verify live OKX TR DCD product access`              | Live TR `pairs` ve BTC/USDT Buy Low `products`; zaman damgalı redakte evidence; güvenli credential/demo failure; erişim ADR'si | A4                        |
 
 ## 7. Yeni agent için devam kontrolü
 
