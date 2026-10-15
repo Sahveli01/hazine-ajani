@@ -135,10 +135,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A3. Gerçek OKX TR DCD erişimini doğrula — KILL GATE 1
 
-- [ ] Durum: `TODO`
-- Sahip: —
+- [ ] Durum: `BLOCKED`
+- Sahip: Codex
 - Commit: —
-- Kanıt: —
+- Kanıt: OKX TR kimlik doğrulaması 2026-10-15 tarihinde tamamlandı; platform API anahtarı oluşturmayı inceleme/onay tamamlanana kadar açmadı (bildirilen süre: 24 saate kadar). Mock veya farklı bölge kullanılmadı.
 
 **Bitince**
 
@@ -185,8 +185,8 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A5. Avalanche Fuji x402 yolunu uçtan uca doğrula — KILL GATE 3
 
-- [ ] Durum: `TODO`
-- Sahip: —
+- [ ] Durum: `IN_PROGRESS`
+- Sahip: Codex
 - Commit: —
 - Kanıt: —
 
@@ -919,6 +919,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 |---|---|---|---|---|---|---|
 | 2026-10-15 | Codex | A1 | DONE | `docs: establish project source of truth and agent handoff` | Kök belge/agent sözleşmesi kontrolü; vibe-coding kaynak notu; bağımsız repo | A2 |
 | 2026-10-15 | Codex | A2 | DONE | `build: pin verified toolchain and project workspace` | Kilitli kurulum; lint/typecheck/4 invariant test/production build; Prettier; production audit | A3 |
+| 2026-10-15 | Codex | A3 | BLOCKED | — | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı | A5; onay gelince A3'e dön |
 
 ## 7. Yeni agent için devam kontrolü
 
