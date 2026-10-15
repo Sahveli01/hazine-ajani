@@ -393,10 +393,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## B7. LLM policy parser ve açıklama sınırını kur
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: constrain LLM to policy parsing and explanation`
+- Kanıt: `packages/policy/src/llm-boundary.ts`, 9 provider/parser/explanation testi, `docs/architecture/0008-llm-policy-and-explanation-boundary.md` ve `docs/evidence/llm-boundary-check-2026-10-16.md`. Responses strict JSON Schema + yerel doğrulama, eksik alan teyidi, injection/bypass reddi, canonical sayı template'i ve providersız deterministik fallback doğrulandı; repo genelinde 91 test geçti.
 
 **Bitince**
 
@@ -930,6 +930,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | B4   | DONE    | `feat: select auditable option proxy with confidence`       | A4 exact snapshot; deterministic near ranking; 6 sınır testi; red trace; premiumsuz no-match; repo check                             | B5                        |
 | 2026-10-16 | Codex | B5   | DONE    | `feat: compute executable premium band and stress outcomes` | Canlı snapshot replay; ücretli bid/ask bandı; fırsat maliyeti; model olasılığı; 3 stres/policy sonucu; 8 test; 68 repo testi          | B6                        |
 | 2026-10-16 | Codex | B6   | DONE    | `feat: enforce deterministic user risk policy gate`         | 14 karar/sınır testi; tüm reason code'lar; fail-closed policy; iki gerçek snapshot REJECT/ACCEPT ayrışması; 82 repo testi            | B7                        |
+| 2026-10-16 | Codex | B7   | DONE    | `feat: constrain LLM to policy parsing and explanation`     | Strict JSON Schema + yerel doğrulama; teyit alanları; injection/bypass; canonical sayı template'i; fallback; 9 test; 91 repo testi   | B8                        |
 
 ## 7. Yeni agent için devam kontrolü
 
