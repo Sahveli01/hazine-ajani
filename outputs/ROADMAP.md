@@ -160,10 +160,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A4. Gerçek option proxy bulunabilirliğini doğrula — KILL GATE 2
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `spike: prove live option proxy for DCD offer`
+- Kanıt: `docs/evidence/okx-option-proxy-live-2026-10-15.md`. `BTC-USDT-261106-79000-P` için exact `BTC-USD-261106-79000-P` bulundu; strike/expiry farkı sıfır. DCD, ticker, iki taraflı order book, index, mark, OI ve Greeks yaklaşık 6,5 saniyelik canlı pencerede doğrulandı. Deterministik kalite kapısı boş/crossed/stale/Greeks eksik veriyi reddediyor; 5 test geçiyor.
 
 **Bitince**
 
@@ -922,6 +922,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-15 | Codex | A2   | DONE    | `build: pin verified toolchain and project workspace`       | Kilitli kurulum; lint/typecheck/4 invariant test/production build; Prettier; production audit                                  | A3                        |
 | 2026-10-15 | Codex | A3   | BLOCKED | —                                                           | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı                                               | A5; onay gelince A3'e dön |
 | 2026-10-15 | Codex | A3   | DONE    | `spike: verify live OKX TR DCD product access`              | Live TR `pairs` ve BTC/USDT Buy Low `products`; zaman damgalı redakte evidence; güvenli credential/demo failure; erişim ADR'si | A4                        |
+| 2026-10-15 | Codex | A4   | DONE    | `spike: prove live option proxy for DCD offer`              | Exact strike/vade proxy; 6,5 saniyelik DCD+option snapshot; iki taraflı book, index, IV/Greeks, OI; 5 veri kalite testi        | A5/A6                     |
 
 ## 7. Yeni agent için devam kontrolü
 
