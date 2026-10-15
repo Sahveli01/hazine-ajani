@@ -1,0 +1,32 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local OKX and wallet material
+.okx/
+config.toml
+keystore/
+
+# Dependencies and builds
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# Logs and local state
+*.log
+logs/
+.turbo/
+.cache/
+.superpowers/
+work/
+
+# Editors and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
