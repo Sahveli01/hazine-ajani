@@ -9,14 +9,27 @@ import {
 } from "@x402/core/server";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
 import { paymentMiddleware, x402ResourceServer } from "@x402/hono";
-import { Hono } from "hono";
+import { Hono, type Context } from "hono";
+
+import type {
+  LiveAnalysisRequest,
+  LiveAnalysisResult,
+} from "./analysis-orchestrator.js";
 
 type AppConfig = {
   payTo: string;
   facilitatorClient?: FacilitatorClient;
+  analysis?: {
+    request: LiveAnalysisRequest;
+    run(request: LiveAnalysisRequest): Promise<LiveAnalysisResult>;
+  };
 };
 
-export async function createApp({ payTo, facilitatorClient }: AppConfig) {
+export async function createApp({
+  payTo,
+  facilitatorClient,
+  analysis,
+}: AppConfig) {
   const paymentRequirements = createFujiPaymentRequirements(payTo);
   const facilitator =
     facilitatorClient ??
@@ -29,7 +42,17 @@ export async function createApp({ payTo, facilitatorClient }: AppConfig) {
 
   const app = new Hono();
 
+  const canonicalAnalysis = async (context: Context) => {
+    if (!analysis)
+      return context.json({ status: "ANALYSIS_NOT_CONFIGURED" }, 503);
+    const result = await analysis.run(analysis.request);
+    return result.status === "SUCCESS"
+      ? context.json(result.report)
+      : context.json(result, result.status === "NO_SUITABLE_PROXY" ? 422 : 503);
+  };
+
   app.get("/health", (context) => context.json({ status: "ok" }));
+  app.get("/api/analysis", canonicalAnalysis);
 
   app.use(
     paymentMiddleware(
@@ -47,13 +70,7 @@ export async function createApp({ payTo, facilitatorClient }: AppConfig) {
     ),
   );
 
-  app.get("/api/agent/risk-report", (context) =>
-    context.json({
-      status: "paid-access-proven",
-      network: AVALANCHE_FUJI.label,
-      note: "A5 integration spike; live OKX report is added after A3 and A4.",
-    }),
-  );
+  app.get("/api/agent/risk-report", canonicalAnalysis);
 
   return app;
 }

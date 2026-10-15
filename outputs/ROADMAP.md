@@ -419,10 +419,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## B8. Uçtan uca analiz orchestration ve trace oluştur
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: orchestrate live OKX risk analysis end to end`
+- Kanıt: `docs/evidence/live-analysis-orchestration-2026-10-16.md`; dört canlı OKX kaynağı; canonical schema; redakte trace; typed network failure; 91 test
 
 **Bitince**
 
@@ -928,9 +928,10 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-15 | Codex | B2   | DONE    | `feat: normalize live OKX DCD and options data`             | Gerçek public spot/exact option ve private DCD/Simple Earn smoke; 10 adapter testi; typed error/bounded retry/provenance; repo check | B3                        |
 | 2026-10-15 | Codex | B3   | DONE    | `feat: model DCD term yield and settlement payoff`          | BigInt Actual/365; OKX 10.000 USDT örneği; strike altı/eşit/üstü; 12 test; lint/typecheck/test/build                                 | B4                        |
 | 2026-10-16 | Codex | B4   | DONE    | `feat: select auditable option proxy with confidence`       | A4 exact snapshot; deterministic near ranking; 6 sınır testi; red trace; premiumsuz no-match; repo check                             | B5                        |
-| 2026-10-16 | Codex | B5   | DONE    | `feat: compute executable premium band and stress outcomes` | Canlı snapshot replay; ücretli bid/ask bandı; fırsat maliyeti; model olasılığı; 3 stres/policy sonucu; 8 test; 68 repo testi          | B6                        |
+| 2026-10-16 | Codex | B5   | DONE    | `feat: compute executable premium band and stress outcomes` | Canlı snapshot replay; ücretli bid/ask bandı; fırsat maliyeti; model olasılığı; 3 stres/policy sonucu; 8 test; 68 repo testi         | B6                        |
 | 2026-10-16 | Codex | B6   | DONE    | `feat: enforce deterministic user risk policy gate`         | 14 karar/sınır testi; tüm reason code'lar; fail-closed policy; iki gerçek snapshot REJECT/ACCEPT ayrışması; 82 repo testi            | B7                        |
 | 2026-10-16 | Codex | B7   | DONE    | `feat: constrain LLM to policy parsing and explanation`     | Strict JSON Schema + yerel doğrulama; teyit alanları; injection/bypass; canonical sayı template'i; fallback; 9 test; 91 repo testi   | B8                        |
+| 2026-10-16 | Codex | B8   | DONE    | `feat: orchestrate live OKX risk analysis end to end`       | Dört canlı OKX kaynağı; canonical report; correlation trace; typed failure; 91 Vitest + 4 invariant; typecheck/lint/build            | C1                        |
 
 ## 7. Yeni agent için devam kontrolü
 

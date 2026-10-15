@@ -74,6 +74,21 @@ importers:
       '@hazine-ajani/avalanche':
         specifier: workspace:*
         version: link:../../packages/avalanche
+      '@hazine-ajani/observability':
+        specifier: workspace:*
+        version: link:../../packages/observability
+      '@hazine-ajani/okx-adapter':
+        specifier: workspace:*
+        version: link:../../packages/okx-adapter
+      '@hazine-ajani/policy':
+        specifier: workspace:*
+        version: link:../../packages/policy
+      '@hazine-ajani/pricing':
+        specifier: workspace:*
+        version: link:../../packages/pricing
+      '@hazine-ajani/report-schema':
+        specifier: workspace:*
+        version: link:../../packages/report-schema
       '@x402/evm':
         specifier: 2.28.0
         version: 2.28.0(typescript@5.9.3)

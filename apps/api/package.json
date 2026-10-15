@@ -6,11 +6,17 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc --noEmit",
+    "smoke:analysis": "tsx scripts/live-analysis-smoke.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@hazine-ajani/avalanche": "workspace:*",
+    "@hazine-ajani/observability": "workspace:*",
+    "@hazine-ajani/okx-adapter": "workspace:*",
+    "@hazine-ajani/policy": "workspace:*",
+    "@hazine-ajani/pricing": "workspace:*",
+    "@hazine-ajani/report-schema": "workspace:*",
     "@hono/node-server": "2.1.5",
     "@x402/core": "2.28.0",
     "@x402/evm": "2.28.0",
