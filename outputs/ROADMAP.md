@@ -342,10 +342,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## B5. Premium bandı ve stres senaryolarını üret
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: compute executable premium band and stress outcomes`
+- Kanıt: `packages/pricing/src/premium-valuation.ts`, 8 golden/property/edge testi, `docs/architecture/0006-executable-premium-band-and-model-probability.md` ve `docs/evidence/premium-valuation-check-2026-10-16.md`. A4 canlı snapshot replay'i, hesap oranlı ve %7 tavanlı ücret, bid/ask bandı, Simple Earn fırsat maliyeti, model olasılığı, üç settlement senaryosu, policy etkisi, disclosure ve confidence fail-closed doğrulandı; repo genelinde 68 test geçti.
 
 **Bitince**
 
@@ -928,6 +928,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-15 | Codex | B2   | DONE    | `feat: normalize live OKX DCD and options data`             | Gerçek public spot/exact option ve private DCD/Simple Earn smoke; 10 adapter testi; typed error/bounded retry/provenance; repo check | B3                        |
 | 2026-10-15 | Codex | B3   | DONE    | `feat: model DCD term yield and settlement payoff`          | BigInt Actual/365; OKX 10.000 USDT örneği; strike altı/eşit/üstü; 12 test; lint/typecheck/test/build                                 | B4                        |
 | 2026-10-16 | Codex | B4   | DONE    | `feat: select auditable option proxy with confidence`       | A4 exact snapshot; deterministic near ranking; 6 sınır testi; red trace; premiumsuz no-match; repo check                             | B5                        |
+| 2026-10-16 | Codex | B5   | DONE    | `feat: compute executable premium band and stress outcomes` | Canlı snapshot replay; ücretli bid/ask bandı; fırsat maliyeti; model olasılığı; 3 stres/policy sonucu; 8 test; 68 repo testi          | B6                        |
 
 ## 7. Yeni agent için devam kontrolü
 
