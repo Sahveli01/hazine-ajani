@@ -1,0 +1,29 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+allowBuilds:
+  "@okx_ai/okx-trade-cli": true
+  "@okx_ai/okx-trade-mcp": true
+  esbuild: true
+
+catalog:
+  "@types/node": 22.18.12
+  typescript: 5.9.3
+  vitest: 5.0.4
+  zod: 4.6.7
+
+minimumReleaseAgeExclude:
+  - "@next/env@16.4.1"
+  - "@next/swc-darwin-arm64@16.4.1"
+  - "@next/swc-darwin-x64@16.4.1"
+  - "@next/swc-linux-arm64-gnu@16.4.1"
+  - "@next/swc-linux-arm64-musl@16.4.1"
+  - "@next/swc-linux-x64-gnu@16.4.1"
+  - "@next/swc-linux-x64-musl@16.4.1"
+  - "@next/swc-win32-arm64-msvc@16.4.1"
+  - "@next/swc-win32-x64-msvc@16.4.1"
+  - next@16.4.1
+  - react-dom@19.3.1
+  - react@19.3.1
+  - viem@2.57.7

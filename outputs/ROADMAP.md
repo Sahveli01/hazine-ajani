@@ -109,10 +109,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A2. Toolchain ve dependency sürümlerini doğrula ve sabitle
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `build: pin verified toolchain and project workspace` (bu adımın commit'i)
+- Kanıt: Node `22.20.0` ve pnpm `11.25.0` sabit; OKX CLI/MCP stable `1.4.8`; `pnpm bootstrap`, format kontrolü ve production audit exit 0; `docs/architecture/0001-toolchain.md`
 
 **Bitince**
 
@@ -918,6 +918,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | Tarih | Agent | Adım | Durum | Commit | Doğrulama/kanıt | Sonraki adım |
 |---|---|---|---|---|---|---|
 | 2026-10-15 | Codex | A1 | DONE | `docs: establish project source of truth and agent handoff` | Kök belge/agent sözleşmesi kontrolü; vibe-coding kaynak notu; bağımsız repo | A2 |
+| 2026-10-15 | Codex | A2 | DONE | `build: pin verified toolchain and project workspace` | Kilitli kurulum; lint/typecheck/4 invariant test/production build; Prettier; production audit | A3 |
 
 ## 7. Yeni agent için devam kontrolü
 

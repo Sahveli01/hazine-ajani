@@ -1,6 +1,6 @@
 # Hazine Ajanı
 
-**Durum:** Uygulama başlamadan önce repo ve agent çalışma sözleşmesi kuruluyor. Kanonik roadmap'te ilk adım A1'dir.
+**Durum:** Repo sözleşmesi ve doğrulanmış TypeScript çalışma alanı hazır. Sıradaki kanonik roadmap adımı A3'tür.
 
 Hazine Ajanı, canlı OKX Dual Investment teklifini canlı OKX opsiyon piyasasındaki uygulanabilir değer aralığı ve kullanıcının risk politikasıyla test eder. `ACCEPT / ASK / REJECT` kararı verir, kullanıcı ayrıca onaylarsa OKX işlemini yürütür ve aynı analiz raporunu başka agentlara Avalanche x402 üzerinden sunar.
 
@@ -31,4 +31,13 @@ Hazine Ajanı, canlı OKX Dual Investment teklifini canlı OKX opsiyon piyasası
 
 ## Kurulum
 
-Henüz dependency veya ürün kodu kurulmadı. Toolchain ve sürüm sabitleme kanonik roadmap'teki A2 adımıdır. Bu README, A2 tamamlandığında doğrulanmış kurulum komutlarıyla güncellenecektir.
+Node.js `22.20.0` ve pnpm `11.25.0` kullanılır. Sürümler `.node-version`, `.nvmrc`, `package.json` ve kilit dosyasında sabittir.
+
+```powershell
+corepack enable
+pnpm bootstrap
+```
+
+`pnpm bootstrap`; kilitli bağımlılık kurulumunu, lint, TypeScript, test ve üretim derlemesini tek komutta çalıştırır. Sonraki kontrollerde kurulum yapmadan yalnız `pnpm check` kullanılabilir. Ortam değişkenlerinin açıklamalı fakat boş listesi `.env.example` dosyasındadır. Gerçek anahtarlar bu dosyaya veya Git'e yazılmaz.
+
+Mimari seçimler ve tarihli bağımlılık riskleri [ADR 0001](docs/architecture/0001-toolchain.md) içinde kayıtlıdır.

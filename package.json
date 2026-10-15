@@ -1,0 +1,38 @@
+{
+  "name": "hazine-ajani",
+  "version": "0.0.0",
+  "private": true,
+  "description": "OKX Dual Investment risk gate and paid agent analysis service",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "22.20.0",
+    "pnpm": "11.25.0"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "bootstrap": "pnpm install --frozen-lockfile && pnpm check",
+    "dev": "turbo dev",
+    "lint": "eslint .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "node --test tests/*.test.mjs && pnpm -r --if-present test",
+    "build": "pnpm -r --if-present build",
+    "format:check": "prettier --check package.json pnpm-workspace.yaml turbo.json tsconfig.base.json eslint.config.mjs apps packages tests docs/architecture README.md",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@okx_ai/okx-trade-cli": "1.4.8",
+    "@okx_ai/okx-trade-mcp": "1.4.8",
+    "@types/node": "22.18.12",
+    "@x402/core": "2.28.0",
+    "@x402/fetch": "2.28.0",
+    "@x402/hono": "2.28.0",
+    "eslint": "10.12.0",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
+    "turbo": "2.11.8",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "5.0.4"
+  }
+}
