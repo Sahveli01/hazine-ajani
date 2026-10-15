@@ -1,6 +1,7 @@
 export const okxAdapterStatus = "unconfigured" as const;
 
 export * from "./read-adapter.js";
+export * from "./write-adapter.js";
 
 type OptionProxySnapshot = {
   targetStrike: number;

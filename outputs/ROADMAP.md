@@ -474,10 +474,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## C2. DCD icrasını güvenli adapter ile bağla
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: execute and reconcile confirmed DCD subscription`
+- Kanıt: `docs/evidence/safe-dcd-write-adapter-2026-10-16.md`; execution-off 0 çağrı; deterministic request; no-retry unknown; order-state reconciliation; server-side cap; canlı write yapılmadı
 
 **Bitince**
 
@@ -933,6 +933,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | B7   | DONE    | `feat: constrain LLM to policy parsing and explanation`     | Strict JSON Schema + yerel doğrulama; teyit alanları; injection/bypass; canonical sayı template'i; fallback; 9 test; 91 repo testi   | B8                        |
 | 2026-10-16 | Codex | B8   | DONE    | `feat: orchestrate live OKX risk analysis end to end`       | Dört canlı OKX kaynağı; canonical report; correlation trace; typed failure; 91 Vitest + 4 invariant; typecheck/lint/build            | C1                        |
 | 2026-10-16 | Codex | C1   | DONE    | `feat: gate every OKX write behind explicit confirmation`   | 6 state-machine testi; ACCEPT-only hazırlık; tek kullanımlık onay; expired/reject/double-submit/network uncertainty; writer gate     | C2                        |
+| 2026-10-16 | Codex | C2   | DONE    | `feat: execute and reconcile confirmed DCD subscription`    | Execution-off 0 çağrı; gerçek CLI request renderer; idempotency; no write retry; order-state reconciliation; server cap; 6 test      | C3/D1                     |
 
 ## 7. Yeni agent için devam kontrolü
 
