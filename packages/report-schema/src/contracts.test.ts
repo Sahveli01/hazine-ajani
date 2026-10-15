@@ -102,6 +102,8 @@ function validReport(): unknown {
       maxRiskNeutralConversionProbability: { value: "0.35", scale: 2 },
       maxStressLossRatio: { value: "0.20", scale: 2 },
       minDataQualityScore: { value: "0.80", scale: 2 },
+      minNetEdgeLowerBound: { value: "0.00", scale: 2 },
+      allowedSettlementCurrencies: ["USDT", "BTC"],
     },
     dataQuality: {
       status: "SUFFICIENT",

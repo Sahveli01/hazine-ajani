@@ -158,13 +158,21 @@ export const valuationSchema = z.strictObject({
   riskNeutralConversionProbability: decimalValueSchema,
 });
 
+const unitRatioSchema = decimalValueSchema.refine(
+  ({ value }) =>
+    compareDecimals(value, "0") >= 0 && compareDecimals(value, "1") <= 0,
+  "Ratio must be between zero and one",
+);
+
 export const riskPolicySchema = z.strictObject({
   policyVersion: z.literal("1.0.0"),
-  maxAllocationRatio: decimalValueSchema,
-  minimumLiquidReserveRatio: decimalValueSchema,
-  maxRiskNeutralConversionProbability: decimalValueSchema,
-  maxStressLossRatio: decimalValueSchema,
-  minDataQualityScore: decimalValueSchema,
+  maxAllocationRatio: unitRatioSchema,
+  minimumLiquidReserveRatio: unitRatioSchema,
+  maxRiskNeutralConversionProbability: unitRatioSchema,
+  maxStressLossRatio: unitRatioSchema,
+  minDataQualityScore: unitRatioSchema,
+  minNetEdgeLowerBound: decimalValueSchema,
+  allowedSettlementCurrencies: z.array(currencySchema).min(1),
 });
 
 export const stressScenarioSchema = z.strictObject({
@@ -196,6 +204,9 @@ export const reasonCodeSchema = z.enum([
   "NO_SUITABLE_PROXY",
   "WRITE_REQUIRES_CONFIRMATION",
   "REGIONAL_PRODUCT_UNAVAILABLE",
+  "SETTLEMENT_CURRENCY_NOT_ALLOWED",
+  "INVALID_POLICY",
+  "POLICY_CHECKS_PASSED",
 ]);
 
 export const executionStateSchema = z.discriminatedUnion("status", [
