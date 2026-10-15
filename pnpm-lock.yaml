@@ -231,6 +231,10 @@ importers:
         version: 5.0.4(@types/node@22.18.12)(vite@8.3.4(@types/node@22.18.12)(esbuild@0.28.2)(tsx@4.23.15))
 
   packages/pricing:
+    dependencies:
+      '@hazine-ajani/report-schema':
+        specifier: workspace:*
+        version: link:../report-schema
     devDependencies:
       typescript:
         specifier: 'catalog:'

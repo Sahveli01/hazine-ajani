@@ -292,10 +292,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## B3. DCD getiri ve settlement motorunu doğrula
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: model DCD term yield and settlement payoff`
+- Kanıt: `packages/pricing/src/dcd-settlement.ts`, 12 unit test, `docs/architecture/0004-dcd-yield-and-settlement.md` ve `docs/evidence/dcd-settlement-manual-check-2026-10-15.md`. Actual/365 APR dönüşümü; Buy Low strike altı/eşit/üstü; principal+coupon para birimi; 30 dakikalık index metadata'sı ve fail-closed girdiler doğrulandı.
 
 **Bitince**
 
@@ -926,6 +926,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-15 | Codex | A6   | DONE    | `design: lock product identity and demo design system`      | PRODUCT/DESIGN; import edilen tokenlar; ekran+Web3 state matrix; Impeccable detector 0; lint/typecheck/22 test/build                 | B1                        |
 | 2026-10-15 | Codex | B1   | DONE    | `feat: define validated financial domain contracts`         | Canonical strict Zod+TS tipleri; decimal/scale/timestamp/version kuralları; 10 contract testi; lint/typecheck/32 test/build          | B2                        |
 | 2026-10-15 | Codex | B2   | DONE    | `feat: normalize live OKX DCD and options data`             | Gerçek public spot/exact option ve private DCD/Simple Earn smoke; 10 adapter testi; typed error/bounded retry/provenance; repo check | B3                        |
+| 2026-10-15 | Codex | B3   | DONE    | `feat: model DCD term yield and settlement payoff`          | BigInt Actual/365; OKX 10.000 USDT örneği; strike altı/eşit/üstü; 12 test; lint/typecheck/test/build                                 | B4                        |
 
 ## 7. Yeni agent için devam kontrolü
 
