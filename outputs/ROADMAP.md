@@ -266,10 +266,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## B2. OKX read adapter'ını gerçek veriyle tamamla
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: normalize live OKX DCD and options data`
+- Kanıt: `packages/okx-adapter/src/read-adapter.ts`, iki live smoke script'i, 10 adapter testi ve `docs/evidence/okx-read-adapter-live-2026-10-15.md`. Gerçek public spot/exact option ile private DCD/Simple Earn okuması geçti; typed error, bounded read retry, exact record seçimi, snapshot provenance/tazelik ve server-side auth sınırı doğrulandı.
 
 **Bitince**
 
@@ -916,15 +916,16 @@ Aynı adım üç farklı nedenle başarısız olursa aynı yaklaşım dördünc�
 
 Her tamamlanan/engellenen adım için tek satır ekle:
 
-| Tarih      | Agent | Adım | Durum   | Commit                                                      | Doğrulama/kanıt                                                                                                                | Sonraki adım              |
-| ---------- | ----- | ---- | ------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| 2026-10-15 | Codex | A1   | DONE    | `docs: establish project source of truth and agent handoff` | Kök belge/agent sözleşmesi kontrolü; vibe-coding kaynak notu; bağımsız repo                                                    | A2                        |
-| 2026-10-15 | Codex | A2   | DONE    | `build: pin verified toolchain and project workspace`       | Kilitli kurulum; lint/typecheck/4 invariant test/production build; Prettier; production audit                                  | A3                        |
-| 2026-10-15 | Codex | A3   | BLOCKED | —                                                           | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı                                               | A5; onay gelince A3'e dön |
-| 2026-10-15 | Codex | A3   | DONE    | `spike: verify live OKX TR DCD product access`              | Live TR `pairs` ve BTC/USDT Buy Low `products`; zaman damgalı redakte evidence; güvenli credential/demo failure; erişim ADR'si | A4                        |
-| 2026-10-15 | Codex | A4   | DONE    | `spike: prove live option proxy for DCD offer`              | Exact strike/vade proxy; 6,5 saniyelik DCD+option snapshot; iki taraflı book, index, IV/Greeks, OI; 5 veri kalite testi        | A5/A6                     |
-| 2026-10-15 | Codex | A6   | DONE    | `design: lock product identity and demo design system`      | PRODUCT/DESIGN; import edilen tokenlar; ekran+Web3 state matrix; Impeccable detector 0; lint/typecheck/22 test/build           | B1                        |
-| 2026-10-15 | Codex | B1   | DONE    | `feat: define validated financial domain contracts`         | Canonical strict Zod+TS tipleri; decimal/scale/timestamp/version kuralları; 10 contract testi; lint/typecheck/32 test/build    | B2                        |
+| Tarih      | Agent | Adım | Durum   | Commit                                                      | Doğrulama/kanıt                                                                                                                      | Sonraki adım              |
+| ---------- | ----- | ---- | ------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| 2026-10-15 | Codex | A1   | DONE    | `docs: establish project source of truth and agent handoff` | Kök belge/agent sözleşmesi kontrolü; vibe-coding kaynak notu; bağımsız repo                                                          | A2                        |
+| 2026-10-15 | Codex | A2   | DONE    | `build: pin verified toolchain and project workspace`       | Kilitli kurulum; lint/typecheck/4 invariant test/production build; Prettier; production audit                                        | A3                        |
+| 2026-10-15 | Codex | A3   | BLOCKED | —                                                           | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı                                                     | A5; onay gelince A3'e dön |
+| 2026-10-15 | Codex | A3   | DONE    | `spike: verify live OKX TR DCD product access`              | Live TR `pairs` ve BTC/USDT Buy Low `products`; zaman damgalı redakte evidence; güvenli credential/demo failure; erişim ADR'si       | A4                        |
+| 2026-10-15 | Codex | A4   | DONE    | `spike: prove live option proxy for DCD offer`              | Exact strike/vade proxy; 6,5 saniyelik DCD+option snapshot; iki taraflı book, index, IV/Greeks, OI; 5 veri kalite testi              | A5/A6                     |
+| 2026-10-15 | Codex | A6   | DONE    | `design: lock product identity and demo design system`      | PRODUCT/DESIGN; import edilen tokenlar; ekran+Web3 state matrix; Impeccable detector 0; lint/typecheck/22 test/build                 | B1                        |
+| 2026-10-15 | Codex | B1   | DONE    | `feat: define validated financial domain contracts`         | Canonical strict Zod+TS tipleri; decimal/scale/timestamp/version kuralları; 10 contract testi; lint/typecheck/32 test/build          | B2                        |
+| 2026-10-15 | Codex | B2   | DONE    | `feat: normalize live OKX DCD and options data`             | Gerçek public spot/exact option ve private DCD/Simple Earn smoke; 10 adapter testi; typed error/bounded retry/provenance; repo check | B3                        |
 
 ## 7. Yeni agent için devam kontrolü
 
