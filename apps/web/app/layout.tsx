@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
+import "./tokens.css";
+
 export const metadata: Metadata = {
   title: "Hazine Ajanı",
   description: "OKX Dual Investment işlem öncesi risk kapısı",

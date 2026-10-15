@@ -211,10 +211,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A6. Ürün ve tasarım yönünü kilitle
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `design: lock product identity and demo design system`
+- Kanıt: Kök `PRODUCT.md` ve `DESIGN.md`; `apps/web/app/tokens.css` kök layout'tan import ediliyor. Operate/açık projeksiyon yönü, 8px ritim, Onest tipografi, ekran hiyerarşileri, async/wallet/transaction state matrix'i ve 1280×720/1024px davranışı kilitlendi. Impeccable detector 0 bulgu; lint/typecheck/22 test/production build geçti.
 
 **Bitince**
 
@@ -923,6 +923,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-15 | Codex | A3   | BLOCKED | —                                                           | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı                                               | A5; onay gelince A3'e dön |
 | 2026-10-15 | Codex | A3   | DONE    | `spike: verify live OKX TR DCD product access`              | Live TR `pairs` ve BTC/USDT Buy Low `products`; zaman damgalı redakte evidence; güvenli credential/demo failure; erişim ADR'si | A4                        |
 | 2026-10-15 | Codex | A4   | DONE    | `spike: prove live option proxy for DCD offer`              | Exact strike/vade proxy; 6,5 saniyelik DCD+option snapshot; iki taraflı book, index, IV/Greeks, OI; 5 veri kalite testi        | A5/A6                     |
+| 2026-10-15 | Codex | A6   | DONE    | `design: lock product identity and demo design system`      | PRODUCT/DESIGN; import edilen tokenlar; ekran+Web3 state matrix; Impeccable detector 0; lint/typecheck/22 test/build           | B1                        |
 
 ## 7. Yeni agent için devam kontrolü
 
