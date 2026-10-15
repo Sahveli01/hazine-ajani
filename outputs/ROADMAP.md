@@ -241,10 +241,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## B1. Sürümlü domain sözleşmelerini tanımla
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: define validated financial domain contracts`
+- Kanıt: `packages/report-schema/src/index.ts`, `packages/report-schema/src/contracts.test.ts`, `docs/architecture/0003-domain-contracts.md`. Strict canonical Zod/TypeScript sözleşmeleri; decimal string+scale ve BigInt band karşılaştırması; timezone'lu timestamp; sürüm/uyumluluk kuralı; eksiksiz x402 receipt ve hassas alan reddi. 10 contract testi, repo genelinde 32 test, lint/typecheck/build geçti.
 
 **Bitince**
 
@@ -924,6 +924,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-15 | Codex | A3   | DONE    | `spike: verify live OKX TR DCD product access`              | Live TR `pairs` ve BTC/USDT Buy Low `products`; zaman damgalı redakte evidence; güvenli credential/demo failure; erişim ADR'si | A4                        |
 | 2026-10-15 | Codex | A4   | DONE    | `spike: prove live option proxy for DCD offer`              | Exact strike/vade proxy; 6,5 saniyelik DCD+option snapshot; iki taraflı book, index, IV/Greeks, OI; 5 veri kalite testi        | A5/A6                     |
 | 2026-10-15 | Codex | A6   | DONE    | `design: lock product identity and demo design system`      | PRODUCT/DESIGN; import edilen tokenlar; ekran+Web3 state matrix; Impeccable detector 0; lint/typecheck/22 test/build           | B1                        |
+| 2026-10-15 | Codex | B1   | DONE    | `feat: define validated financial domain contracts`         | Canonical strict Zod+TS tipleri; decimal/scale/timestamp/version kuralları; 10 contract testi; lint/typecheck/32 test/build    | B2                        |
 
 ## 7. Yeni agent için devam kontrolü
 
