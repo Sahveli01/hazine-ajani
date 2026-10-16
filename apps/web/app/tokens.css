@@ -26,6 +26,9 @@
   --color-danger-surface: oklch(95% 0.045 28);
   --color-testnet: oklch(48% 0.14 295);
   --color-testnet-surface: oklch(95% 0.045 295);
+  --color-accept: oklch(42% 0.12 151);
+  --color-ask: oklch(45% 0.13 75);
+  --color-reject: oklch(44% 0.16 28);
 
   --space-0: 0;
   --space-1: 0.5rem;
@@ -73,6 +76,9 @@
   --analysis-panel-height-compact: 24rem;
   --analysis-panel-height-mobile: 25rem;
   --analysis-id-max-width: 13rem;
+  --inspector-max: 90rem;
+  --decision-column: 22rem;
+  --evidence-min: 10rem;
   --hero-copy-max: 40rem;
   --hero-title: clamp(2.75rem, 5vw, 4.75rem);
   --breakpoint-tablet: 64rem;

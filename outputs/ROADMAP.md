@@ -580,10 +580,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## D2. Teklif denetçisi ana ekranını bitir
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: present live DCD risk decision with evidence`
+- Kanıt: `docs/evidence/d2-offer-inspector-2026-10-16.md`, `docs/evidence/d2-live-analysis-report-2026-10-16.json`, `docs/evidence/d2-screens/`. Canlı OKX raporu; karar/evidence/policy/source hiyerarşisi; risk-nötr açıklama; yetersiz veri fail-closed; ACCEPT/ASK/REJECT/stale görsel harness; 1280/1024/390 responsive tur; Impeccable detector `[]` ve bağımsız reviewer `ship`; 137 Vitest + 4 invariant, lint/typecheck/build geçti.
 
 **Bitince**
 
@@ -946,6 +946,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | C2   | DONE    | `feat: execute and reconcile confirmed DCD subscription`    | Execution-off 0 çağrı; gerçek CLI request renderer; idempotency; no write retry; order-state reconciliation; server cap; 6 test      | C3/D1                     |
 | 2026-10-16 | Codex | C3   | DONE    | `feat: sell live risk reports through Avalanche x402`       | Gerçek 0,01 Fuji test USDC tx `0xcfd137…c46e`; RPC exact Transfer doğrulaması; canonical paid report; replay/error testleri          | D2                        |
 | 2026-10-16 | Codex | D1   | DONE    | `feat: build resilient live-analysis application shell`     | Strict live wiring; 1280 no-scroll; 1024/390 no horizontal overflow; accessible loading; AA contrast; 10 focused test; repo checks   | D2                        |
+| 2026-10-16 | Codex | D2   | DONE    | `feat: present live DCD risk decision with evidence`        | Canlı OKX report; karar+kanıt+policy+source; 7 final screenshot; detector 0; reviewer ship; 137 Vitest+4 invariant; repo check       | D3                        |
 
 ## 7. Yeni agent için devam kontrolü
 
@@ -960,4 +961,4 @@ Yeni oturumda şu sıra izlenir:
 7. Acceptance tamamlanana kadar yalnız o adımın kapsamını değiştir.
 8. Verification çalıştır, kanıtı kaydet, commit et, roadmap'i güncelle.
 
-**İlk uygulanacak adım A1'dir.** Tamamlanmış sayılması için belgeler repo kökünde bulunmalı ve yeni bir agent yalnız bu belgelerle ürün gerçeğini, mock yasağını ve A2'ye geçiş koşulunu doğru anlayabilmelidir.
+**İlk uygulanacak adım D3'tür.** D2'nin canlı teklif denetçisi ve state kanıtları korunur; D3 ayrı onay ve execution lifecycle ekranını gerçek state machine ile bağlar.

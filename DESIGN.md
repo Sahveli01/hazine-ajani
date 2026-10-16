@@ -100,6 +100,47 @@ Transaction aynı sabit bölgede ilerler:
 
 `PRODUCT.md` ürün kimliğini, kullanıcıyı, doğruluk sınırını ve dili yönetir. Bu dosya görsel sistem, demo koşulu, ekran hiyerarşisi ve Web3 state matrix'ini yönetir. İki belge aynı kararı farklı kelimelerle tekrar etmez; çelişkide ürün gerçeği `PRODUCT.md`'den alınır.
 
+## Impeccable direction contract
+
+### THESIS
+
+Teklif denetçisi bir finans vitrini değil, işlemden önce kapanan bir risk
+kapısıdır. İlk bakışta kullanıcının aklında kalması gereken şey yüksek APR değil;
+büyük deterministik karar ve hemen yanındaki iki kanıttır.
+
+### OWN-WORLD
+
+Ürünün kendi dünyası bir **karar defteri**dir: soğuk beyaz zemin, koyu karar
+yüzeyi, ince kaynak kuralları, tabular sayılar ve yalnız semantik durum rengi.
+Apple-adjacent karakter sessiz chrome, hassas tipografi ve neden-sonuç
+hareketinden gelir; sponsor rengi veya dekoratif finans grafiği kimlik taşımaz.
+
+### STORY
+
+Kullanıcı önce canlı kaynak ve geçerlilik zamanını görür, sonra tek büyük
+`ACCEPT / ASK / REJECT` sonucunu okur. DCD getirisi ile işlem yapılabilir opsiyon
+bandı karşılaştırmayı kanıtlar; politika sonucu sınırlar; kaynak disclosure'ı
+denetlenebilir ayrıntıyı açar. `ACCEPT` ve `ASK` kullanıcıyı çalışan politika
+incelemesine götürür, `REJECT` para hareketi aksiyonu üretmez. Stale ve yetersiz
+veri hikâyeyi keser ve yeni analiz ister.
+
+### FIRST VIEWPORT
+
+1280×720'de header, karar, beş kanıt, doğrulanmış politika ve kaynak disclosure
+kontrolü görünür. 1024×720'de karar ile bütün kanıtlar ilk viewport'ta kalır;
+politika aşağı devam edebilir. Karar en büyük metindir; nedeni, kaynak zamanı ve
+geçerlilik zamanı aynı koyu yüzeydedir. Risk-nötr olasılık her zaman model ölçüsü
+olarak etiketlenir.
+
+### FORM
+
+Corroborated seed key: `operate/decision-ledger/tonal-rules/v1`. Bu anahtar
+`apps/web/app/offer-inspector.tsx`, `apps/web/app/shell.css` ve
+`docs/evidence/d2-screens/d2-live-1280x720.png` içinde aynı form ile doğrulanır:
+tek geniş karar düzlemi, yatay kanıt cetveli, yapılandırılmış politika satırı ve
+açılır kaynak defteri. Form yeni bir görsel dünya değil, A6'da kilitlenen Operate
+yönünün uygulanmış hâlidir.
+
 ## Anti-pattern sözleşmesi
 
 - Gradient headline, neon glow, emoji heading, anlamsız glassmorphism ve sponsor renklerinden dekoratif karışım yoktur.
