@@ -24,9 +24,10 @@ evidence is missing.
   appear in `.env.example` values.
 - Browser x402 payment uses the user's injected wallet and EIP-712 signature;
   the application never requests or stores the wallet private key.
-- Production secrets belong in the deployment platform's secret store. IP
-  allowlisting should be enabled for OKX profiles when the platform provides a
-  stable egress address.
+- During the official local-first hackathon deployment, secrets remain only in
+  the local OKX profile or the hidden facilitator process input. The HTTPS
+  tunnel receives no credential value. A later cloud deployment must use its
+  platform secret store and stable-egress IP allowlisting where available.
 
 ## Money movement controls
 
@@ -44,9 +45,10 @@ successful Fuji receipt. An atomic durable claim file prevents transaction
 reuse across restarts and concurrent processes that share the configured
 volume.
 
-`X402_REPLAY_STORE_DIR` must point to a persistent volume shared by every web
-instance. The paid flow returns unavailable rather than falling back to memory
-or an ephemeral path when this setting is absent.
+`X402_REPLAY_STORE_DIR` must point to the persistent local demo directory (or
+a shared persistent volume in a future cloud deployment). The paid flow
+returns unavailable rather than falling back to memory or an ephemeral path
+when this setting is absent.
 
 ## LLM, logging and errors
 

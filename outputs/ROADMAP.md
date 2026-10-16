@@ -736,21 +736,21 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## E3. Production deploy ve operasyon kanıtı
 
-- [ ] Durum: `TODO`
-- Sahip: —
+- [ ] Durum: `IN_PROGRESS`
+- Sahip: Codex
 - Commit: —
-- Kanıt: —
+- Kanıt: Ara kontrol: E2 `9e3d8ca` ile temiz tamamlandı. E3 yerel hazırlığında `/health` deploy SHA, `/ready` canlı analiz gate'i, korelasyon kimlikli JSON request logu, UI build etiketi ve API production start komutları test edildi. Railway Free hesabı hem CLI hem web'de yeni proje oluşturmayı `trial expired` ile reddetti; kullanıcı 17 Ekim 2026'da Oracle Cloud Always Free VM'e geçişi seçti.
 
 **Bitince**
 
-- Web ve API production URL'de HTTPS ile çalışır.
-- Secretlar platform secret store'dadır; public env yalnız public chain/config taşır.
+- Tam web/API/facilitator akışı demo bilgisayarından geçici public HTTPS URL ile çalışır; bilgisayar hackathon boyunca açık kalır.
+- Secretlar yalnız yerel OKX profili ve facilitator sürecindedir; HTTPS tüneline veya public env'e taşınmaz.
 - Health/readiness, structured logs ve hata korelasyon kimliği vardır.
-- Gerçek OKX read-only analysis production'da çalışır.
-- x402 Fuji endpoint production URL üzerinden gerçek ödeme alır.
+- Gerçek OKX read-only analysis public demo URL'sinde çalışır.
+- x402 Fuji endpoint public demo URL'si üzerinden gerçek ödeme alır.
 - Deploy commit hash'i UI/footer veya health metadata'da görünür.
 
-**Doğrulama:** Temiz browser/makineden live flow; curl/client health ve analysis; explorer tx; deploy log.
+**Doğrulama:** Temiz browser/makineden geçici HTTPS URL üzerinde live flow; local health/readiness; explorer tx; tunnel ve deploy logu.
 
 **Demo edilir:** Evet.
 
@@ -758,7 +758,7 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 **Commit:** `ops: deploy verified live demo and paid agent endpoint`
 
-**Başarısızlık:** Localhost demo teslim sayılmaz. Production blocker çözülmezse kayıtlı fallback video gerçek local+live kaynaklarla çekilir fakat çalışan demo gate'i risk olarak açık yazılır.
+**Başarısızlık:** Yalnız localhost teslim sayılmaz. HTTPS tüneli kurulamazsa kayıtlı fallback video gerçek local+live kaynaklarla çekilir fakat çalışan demo gate'i risk olarak açık yazılır.
 
 ## E4. README, mimari ve kaynak dokümantasyonunu tamamla
 
@@ -914,6 +914,18 @@ Aynı adım üç farklı nedenle başarısız olursa aynı yaklaşım dördünc�
 
 ## 6. İlerleme günlüğü
 
+## Sapma — 2026-10-17, adım E3
+
+Neydi: Web, API, facilitator ve kalıcı replay storage Railway üzerinde production HTTPS servisleri olarak dağıtılacaktı.
+
+Ne çıktı: Hesap arayüzü Free planı etkin gösterse de hem güncel Railway CLI hem web dashboard yeni proje oluşturmayı `Your trial has expired` hatasıyla reddetti. İki eski başarısız proje kullanıcı onayıyla silindi; yeni proje hâlâ oluşturulamadı. Ücretli Hobby planı kullanıcı tarafından reddedildi. Oracle kayıt bölgesi Türkiye'yi sunmadığı için yanlış ülke seçilmedi ve bu yol da bırakıldı. Organizatörün vibe-coding rehberi ve OKX TradeKit sayfası CLI'ın yerel-first çalıştığını, bir günlük etkinlik için agentın bilgisayarda kalıp arayüzün yayınlanabileceğini belirtiyor.
+
+Geri alınan: Railway'e yeniden deneme yapılmayacak; trial atlatmak için yeni hesap açılmayacak ve ephemeral ücretsiz serviste replay koruması zayıflatılmayacak.
+
+Korunan: Public HTTPS URL, kalıcı atomik replay storage, canlı OKX read-only analiz, gerçek Fuji x402 settlement, secret izolasyonu ve deploy commit kanıtı korunuyor. Demo bilgisayarı hackathon boyunca açık kalacak.
+
+Yeni plan: Kullanıcının 17 Ekim 2026 onayıyla organizatör rehberindeki local-first modele geçildi. Tek PowerShell komutu facilitator, API ve production web süreçlerini yerelde başlatacak; Cloudflare Quick Tunnel tam uygulamayı geçici HTTPS adresinden yayınlayacak. OKX profili, facilitator key ve replay dizini bilgisayardan ayrılmayacak. Public URL terminal açık olduğu sürece çalışacak ve fallback video aynı gerçek akıştan çekilecek.
+
 ## Sapma — 2026-10-16, adım A5
 
 Neydi: Fuji x402 settlement için public Ultravioleta facilitator kullanılacaktı.
@@ -952,6 +964,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | D5   | DONE    | `fix: harden demo UX across access and screen states`       | axe 0 ihlal; 1280/1024/390 taşma yok; Tab 3px odak; reduced motion 0 animasyon; exact aria sayılar; 178 Vitest+4 invariant          | E1                        |
 | 2026-10-16 | Codex | E1   | DONE    | `security: verify financial controls and secret boundaries` | Bağımsız matematik pass; canonical server report; kalıcı atomik replay; error allowlist; SECURITY; audit temiz; 179+4 test          | E2                        |
 | 2026-10-16 | Codex | E2   | DONE    | `audit: remove fake data and dead demo paths`                | Hack-audit 0 blocker/0 warning; runtime mock/fixture yok; dead action yok; gerçek source+timestamp; token bypass yok                | E3                        |
+| 2026-10-17 | Codex | E3   | IN_PROGRESS | — | Health/readiness, deploy SHA, structured log ve build etiketi hazır. Railway/Oracle sapması kapatıldı; resmî local-first yönde tek komutlu production web+API+facilitator+Cloudflare HTTPS akışı hazırlandı. Tam `pnpm check` geçti; canlı URL doğrulaması Fuji key'in güvenli prompt ile girilmesini bekliyor. | Canlı demo komutunu çalıştır ve URL'yi doğrula |
 
 ## 7. Yeni agent için devam kontrolü
 

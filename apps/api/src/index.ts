@@ -1,4 +1,5 @@
 import { serve } from "@hono/node-server";
+import { randomUUID } from "node:crypto";
 import { pathToFileURL } from "node:url";
 import {
   AVALANCHE_FUJI,
@@ -26,6 +27,9 @@ type AppConfig = {
     request: LiveAnalysisRequest;
     run(request: LiveAnalysisRequest): Promise<LiveAnalysisResult>;
   };
+  deployment?: { commit?: string };
+  requestId?: () => string;
+  log?: (entry: Record<string, unknown>) => void;
 };
 
 export async function createApp({
@@ -33,6 +37,9 @@ export async function createApp({
   facilitatorClient,
   facilitatorUrl,
   analysis,
+  deployment,
+  requestId = () => `req_${randomUUID().replaceAll("-", "")}`,
+  log = (entry) => console.log(JSON.stringify(entry)),
 }: AppConfig) {
   const paymentRequirements = createFujiPaymentRequirements(payTo);
   const facilitator =
@@ -48,6 +55,21 @@ export async function createApp({
 
   const app = new Hono();
 
+  app.use("*", async (context, next) => {
+    const startedAt = Date.now();
+    const correlationId = requestId();
+    context.header("x-correlation-id", correlationId);
+    await next();
+    log({
+      type: "HTTP_REQUEST",
+      correlationId,
+      method: context.req.method,
+      path: new URL(context.req.url).pathname,
+      status: context.res.status,
+      latencyMs: Date.now() - startedAt,
+    });
+  });
+
   const canonicalAnalysis = async (context: Context) => {
     if (!analysis)
       return context.json({ status: "ANALYSIS_NOT_CONFIGURED" }, 503);
@@ -57,7 +79,18 @@ export async function createApp({
       : context.json(result, result.status === "NO_SUITABLE_PROXY" ? 422 : 503);
   };
 
-  app.get("/health", (context) => context.json({ status: "ok" }));
+  app.get("/health", (context) =>
+    context.json({
+      status: "ok",
+      service: "hazine-ajani-api",
+      ...(deployment?.commit ? { commit: deployment.commit } : {}),
+    }),
+  );
+  app.get("/ready", (context) =>
+    analysis
+      ? context.json({ status: "ready" })
+      : context.json({ status: "not_ready" }, 503),
+  );
   app.get("/api/analysis", canonicalAnalysis);
 
   app.use(
@@ -103,12 +136,15 @@ export function resolvePort(
 
 if (isDirectExecution(import.meta.url, process.argv[1])) {
   const analysis = createRuntimeAnalysis(process.env);
+  const deployCommit =
+    process.env.DEPLOY_COMMIT ?? process.env.RAILWAY_GIT_COMMIT_SHA;
   const app = await createApp({
     payTo: process.env.X402_PAY_TO_ADDRESS ?? "",
     ...(process.env.X402_FACILITATOR_URL
       ? { facilitatorUrl: process.env.X402_FACILITATOR_URL }
       : {}),
     ...(analysis ? { analysis } : {}),
+    ...(deployCommit ? { deployment: { commit: deployCommit } } : {}),
   });
   serve({ fetch: app.fetch, port: resolvePort(process.env.PORT, 3001) });
 }

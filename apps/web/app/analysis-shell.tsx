@@ -1,6 +1,7 @@
 import type { AnalysisViewState } from "./live-analysis";
 import { analysisStateContent, shellConnectionContent } from "./live-analysis";
 import { OfferInspector } from "./offer-inspector";
+import { deploymentLabel } from "./deployment-metadata";
 
 function formatTime(value: string | undefined): string {
   if (!value) return "Veri bekleniyor";
@@ -131,6 +132,10 @@ export function AnalysisShell({ state }: { state: AnalysisViewState }) {
           </section>
         </section>
       )}
+      <footer className="deployment-footer">
+        <span>Gerçek OKX verisi · Avalanche Fuji TESTNET</span>
+        <code>{deploymentLabel(process.env.NEXT_PUBLIC_DEPLOY_COMMIT)}</code>
+      </footer>
     </main>
   );
 }

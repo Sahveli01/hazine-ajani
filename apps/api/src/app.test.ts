@@ -47,11 +47,60 @@ describe("x402 paid risk report route", () => {
   });
 
   it("keeps health checks public", async () => {
-    const app = await createApp({ payTo: PAY_TO, facilitatorClient });
+    const app = await createApp({
+      payTo: PAY_TO,
+      facilitatorClient,
+      deployment: { commit: "9e3d8ca" },
+    });
     const response = await app.request("/health");
 
     expect(response.status).toBe(200);
-    await expect(response.json()).resolves.toEqual({ status: "ok" });
+    await expect(response.json()).resolves.toEqual({
+      status: "ok",
+      service: "hazine-ajani-api",
+      commit: "9e3d8ca",
+    });
+  });
+
+  it("reports readiness only when live analysis is configured", async () => {
+    const unavailable = await createApp({ payTo: PAY_TO, facilitatorClient });
+    expect((await unavailable.request("/ready")).status).toBe(503);
+
+    const ready = await createApp({
+      payTo: PAY_TO,
+      facilitatorClient,
+      analysis: {
+        request: {} as never,
+        run: () => Promise.reject(new Error("not called by readiness")),
+      },
+    });
+    const response = await ready.request("/ready");
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ status: "ready" });
+  });
+
+  it("adds a correlation id and emits one structured request log", async () => {
+    const logs: unknown[] = [];
+    const app = await createApp({
+      payTo: PAY_TO,
+      facilitatorClient,
+      requestId: () => "req_1234567890abcdef",
+      log: (entry) => logs.push(entry),
+    });
+    const response = await app.request("/health");
+
+    expect(response.headers.get("x-correlation-id")).toBe(
+      "req_1234567890abcdef",
+    );
+    expect(logs).toEqual([
+      expect.objectContaining({
+        type: "HTTP_REQUEST",
+        correlationId: "req_1234567890abcdef",
+        method: "GET",
+        path: "/health",
+        status: 200,
+      }),
+    ]);
   });
 
   it("returns a Fuji-labelled 402 challenge without a payment", async () => {
