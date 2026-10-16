@@ -6,6 +6,7 @@ import type {
 
 import { buildOfferInspectorView } from "./offer-inspector-model";
 import { ExecutionPanel } from "./execution-panel";
+import { exactPercentLabel } from "./financial-format";
 import { AgentPaymentExperience } from "./agent-payment-experience";
 
 const decisionCopy = {
@@ -109,12 +110,20 @@ export function OfferInspector({ report }: { report: AnalysisReport }) {
         <div className="evidence-strip" aria-label="Karar kanıtları">
           <div className="primary-evidence">
             <span>DCD dönem getirisi</span>
-            <strong>{percent(report.dcdOffer.termYield)}</strong>
-            <small>APR {percent(report.dcdOffer.annualizedYield)}</small>
+            <strong aria-label={exactPercentLabel(report.dcdOffer.termYield)}>
+              {percent(report.dcdOffer.termYield)}
+            </strong>
+            <small
+              aria-label={`APR, ${exactPercentLabel(report.dcdOffer.annualizedYield)}`}
+            >
+              APR {percent(report.dcdOffer.annualizedYield)}
+            </small>
           </div>
           <div className="primary-evidence">
             <span>Opsiyon premium bandı</span>
-            <strong>
+            <strong
+              aria-label={`${exactPercentLabel(report.valuation.proxyYieldBand.low)} ile ${exactPercentLabel(report.valuation.proxyYieldBand.high)} arası`}
+            >
               {percent(report.valuation.proxyYieldBand.low)}–
               {percent(report.valuation.proxyYieldBand.high)}
             </strong>
@@ -122,14 +131,22 @@ export function OfferInspector({ report }: { report: AnalysisReport }) {
           </div>
           <div>
             <span>Net avantaj bandı</span>
-            <strong>
+            <strong
+              aria-label={`${exactPercentLabel(report.valuation.netEdgeBand.low)} ile ${exactPercentLabel(report.valuation.netEdgeBand.high)} arası`}
+            >
               {percent(report.valuation.netEdgeBand.low)}–
               {percent(report.valuation.netEdgeBand.high)}
             </strong>
           </div>
           <div>
             <span>Simple Earn</span>
-            <strong>
+            <strong
+              aria-label={
+                simpleEarn.status === "AVAILABLE"
+                  ? exactPercentLabel(simpleEarn.value)
+                  : undefined
+              }
+            >
               {simpleEarn.status === "AVAILABLE"
                 ? percent(simpleEarn.value)
                 : "Kullanılamıyor"}
@@ -137,7 +154,11 @@ export function OfferInspector({ report }: { report: AnalysisReport }) {
           </div>
           <div>
             <span>Risk-nötr dönüşüm olasılığı</span>
-            <strong>
+            <strong
+              aria-label={exactPercentLabel(
+                report.valuation.riskNeutralConversionProbability,
+              )}
+            >
               {percent(report.valuation.riskNeutralConversionProbability)}
             </strong>
             <small title="Opsiyon fiyatından türetilen model ölçüsüdür; tahmin değildir.">
@@ -158,17 +179,33 @@ export function OfferInspector({ report }: { report: AnalysisReport }) {
           <dl>
             <div>
               <dt>Azami dönüşüm</dt>
-              <dd>
+              <dd
+                aria-label={exactPercentLabel(
+                  report.riskPolicy.maxRiskNeutralConversionProbability,
+                )}
+              >
                 {percent(report.riskPolicy.maxRiskNeutralConversionProbability)}
               </dd>
             </div>
             <div>
               <dt>Asgari likit rezerv</dt>
-              <dd>{percent(report.riskPolicy.minimumLiquidReserveRatio)}</dd>
+              <dd
+                aria-label={exactPercentLabel(
+                  report.riskPolicy.minimumLiquidReserveRatio,
+                )}
+              >
+                {percent(report.riskPolicy.minimumLiquidReserveRatio)}
+              </dd>
             </div>
             <div>
               <dt>Azami stres kaybı</dt>
-              <dd>{percent(report.riskPolicy.maxStressLossRatio)}</dd>
+              <dd
+                aria-label={exactPercentLabel(
+                  report.riskPolicy.maxStressLossRatio,
+                )}
+              >
+                {percent(report.riskPolicy.maxStressLossRatio)}
+              </dd>
             </div>
             <div>
               <dt>İzinli settlement</dt>
@@ -204,7 +241,9 @@ export function OfferInspector({ report }: { report: AnalysisReport }) {
               </div>
               <div>
                 <dt>Veri güveni</dt>
-                <dd>{percent(report.dataQuality.score)}</dd>
+                <dd aria-label={exactPercentLabel(report.dataQuality.score)}>
+                  {percent(report.dataQuality.score)}
+                </dd>
               </div>
               <div>
                 <dt>Index</dt>

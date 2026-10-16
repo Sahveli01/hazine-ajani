@@ -1,0 +1,138 @@
+[
+  {
+    "path": "/",
+    "width": 1280,
+    "audit": {
+      "violations": []
+    },
+    "metrics": {
+      "innerWidth": 1280,
+      "scrollWidth": 1280,
+      "animations": 0,
+      "focusables": [
+        {
+          "text": "HAHazine AjanıDual Investment Risk Gate",
+          "visible": true
+        }
+      ]
+    }
+  },
+  {
+    "path": "/",
+    "width": 1024,
+    "audit": {
+      "violations": []
+    },
+    "metrics": {
+      "innerWidth": 1024,
+      "scrollWidth": 1016,
+      "animations": 0,
+      "focusables": [
+        {
+          "text": "HAHazine AjanıDual Investment Risk Gate",
+          "visible": true
+        }
+      ]
+    }
+  },
+  {
+    "path": "/",
+    "width": 390,
+    "audit": {
+      "violations": []
+    },
+    "metrics": {
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "animations": 0,
+      "focusables": [
+        {
+          "text": "HAHazine AjanıDual Investment Risk Gate",
+          "visible": true
+        }
+      ]
+    }
+  },
+  {
+    "path": "/d5-proof",
+    "width": 1280,
+    "audit": {
+      "violations": []
+    },
+    "metrics": {
+      "innerWidth": 1280,
+      "scrollWidth": 1272,
+      "animations": 0,
+      "focusables": [
+        {
+          "text": "Kaynak ve eşleşme ayrıntıları",
+          "visible": true
+        },
+        {
+          "text": "Ödeme isteğini başlat",
+          "visible": true
+        }
+      ]
+    }
+  },
+  {
+    "path": "/d5-proof",
+    "width": 1024,
+    "audit": {
+      "violations": []
+    },
+    "metrics": {
+      "innerWidth": 1024,
+      "scrollWidth": 1016,
+      "animations": 0,
+      "focusables": [
+        {
+          "text": "Kaynak ve eşleşme ayrıntıları",
+          "visible": true
+        },
+        {
+          "text": "Ödeme isteğini başlat",
+          "visible": true
+        }
+      ]
+    }
+  },
+  {
+    "path": "/d5-proof",
+    "width": 390,
+    "audit": {
+      "violations": []
+    },
+    "metrics": {
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "animations": 0,
+      "focusables": [
+        {
+          "text": "Kaynak ve eşleşme ayrıntıları",
+          "visible": true
+        },
+        {
+          "text": "Ödeme isteğini başlat",
+          "visible": true
+        }
+      ]
+    }
+  },
+  {
+    "keyboard": [
+      {
+        "tag": "SUMMARY",
+        "text": "Kaynak ve eşleşme ayrıntıları",
+        "outlineStyle": "solid",
+        "outlineWidth": "3px"
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Ödeme isteğini başlat",
+        "outlineStyle": "solid",
+        "outlineWidth": "3px"
+      }
+    ]
+  }
+]
