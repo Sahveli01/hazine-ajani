@@ -54,3 +54,20 @@ The official x402 `SettleResponse.amount` field is optional. The local
 facilitator omitted it even though settlement succeeded. The client now checks
 the field when present and always treats the on-chain exact transfer event as
 the authoritative amount proof.
+
+## Clean repeat run after the fix
+
+The complete command was run again after the optional-amount fix and finished
+without recovery or manual intervention:
+
+- Resource status: `PAID_REPORT_RPC_CONFIRMED`
+- Live analysis: `ana_29d34ebcbfb04db4b8e38e7da6b540f4`
+- Exact live proxy: `BTC-USD-261017-80750-P`
+- Decision: `REJECT — PREMIUM_BELOW_MARKET_BAND`
+- Transaction: `0x101a0e12ef4cf2f8ca25c7aa2bc014ac3119a32db648bd9ff2306abf93403ce1`
+- Explorer: <https://testnet.snowtrace.io/tx/0x101a0e12ef4cf2f8ca25c7aa2bc014ac3119a32db648bd9ff2306abf93403ce1>
+- Confirmed at: `2026-10-16T14:23:56.000Z`
+
+The returned JSON carried `schemaVersion: 1.0.0`, four live OKX sources,
+`proxyMatch.quality: EXACT`, the deterministic valuation and policy decision,
+and the RPC-confirmed `x402Payment` object in one response.

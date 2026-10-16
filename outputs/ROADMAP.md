@@ -503,7 +503,7 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 - [x] Durum: `DONE`
 - Sahip: Codex
 - Commit: `feat: sell live risk reports through Avalanche x402`
-- Kanıt: `docs/evidence/C3-paid-canonical-report-2026-10-16.md`; gerçek `0,01` Fuji test USDC tx `0xcfd137…c46e`; receipt içindeki exact token/payer/payTo/tutar ve block timestamp RPC doğrulaması; canonical `AnalysisReport` + x402Payment; replay/wrong-chain/insufficient-balance/facilitator hata testleri.
+- Kanıt: `docs/evidence/C3-paid-canonical-report-2026-10-16.md`; temiz tekrar koşusunda gerçek `0,01` Fuji test USDC tx `0x101a0e…03ce1` ve `PAID_REPORT_RPC_CONFIRMED`; receipt içindeki exact token/payer/payTo/tutar ve block timestamp RPC doğrulaması; canonical `AnalysisReport` + x402Payment; replay/wrong-chain/insufficient-balance/facilitator hata testleri.
 
 **Bitince**
 
