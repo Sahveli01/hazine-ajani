@@ -135,38 +135,41 @@ describe("Fuji x402 agent client", () => {
     expect(paidFetch).toHaveBeenCalledTimes(1);
   });
 
-  it("surfaces a failed facilitator settlement reason without marking it paid", async () => {
-    const settlement = {
-      success: false,
-      errorReason: "invalid_exact_evm_payload",
-      transaction: "",
-      network: "eip155:43113" as const,
-    };
-    const paidFetch = vi.fn(() =>
-      Promise.resolve(
-        new Response(JSON.stringify({ status: "payment required" }), {
-          status: 402,
-          headers: {
-            "content-type": "application/json",
-            "payment-response": encodePaymentResponseHeader(settlement),
-          },
-        }),
-      ),
-    );
+  it.each(["invalid_exact_evm_payload", "insufficient_balance"])(
+    "surfaces facilitator failure %s without marking it paid",
+    async (errorReason) => {
+      const settlement = {
+        success: false,
+        errorReason,
+        transaction: "",
+        network: "eip155:43113" as const,
+      };
+      const paidFetch = vi.fn(() =>
+        Promise.resolve(
+          new Response(JSON.stringify({ status: "payment required" }), {
+            status: 402,
+            headers: {
+              "content-type": "application/json",
+              "payment-response": encodePaymentResponseHeader(settlement),
+            },
+          }),
+        ),
+      );
 
-    await expect(
-      executeFujiPaidRequestWithRetry(
-        paidFetch,
-        "http://127.0.0.1:3001/paid",
-        3,
-        () => Promise.resolve(),
-      ),
-    ).rejects.toMatchObject<Partial<PaidResourceError>>({
-      message: "Paid resource returned HTTP 402: invalid_exact_evm_payload",
-      status: 402,
-      settled: false,
-      settlement,
-    });
-    expect(paidFetch).toHaveBeenCalledTimes(1);
-  });
+      await expect(
+        executeFujiPaidRequestWithRetry(
+          paidFetch,
+          "http://127.0.0.1:3001/paid",
+          3,
+          () => Promise.resolve(),
+        ),
+      ).rejects.toMatchObject<Partial<PaidResourceError>>({
+        message: `Paid resource returned HTTP 402: ${errorReason}`,
+        status: 402,
+        settled: false,
+        settlement,
+      });
+      expect(paidFetch).toHaveBeenCalledTimes(1);
+    },
+  );
 });

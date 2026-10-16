@@ -74,6 +74,9 @@ importers:
       '@hazine-ajani/avalanche':
         specifier: workspace:*
         version: link:../../packages/avalanche
+      '@hazine-ajani/report-schema':
+        specifier: workspace:*
+        version: link:../../packages/report-schema
       '@x402/evm':
         specifier: 2.28.0
         version: 2.28.0(typescript@5.9.3)

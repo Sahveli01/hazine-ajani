@@ -500,10 +500,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## C3. x402 analiz endpoint'ini canonical rapora bağla
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: sell live risk reports through Avalanche x402`
+- Kanıt: `docs/evidence/C3-paid-canonical-report-2026-10-16.md`; gerçek `0,01` Fuji test USDC tx `0xcfd137…c46e`; receipt içindeki exact token/payer/payTo/tutar ve block timestamp RPC doğrulaması; canonical `AnalysisReport` + x402Payment; replay/wrong-chain/insufficient-balance/facilitator hata testleri.
 
 **Bitince**
 
@@ -944,6 +944,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | B8   | DONE    | `feat: orchestrate live OKX risk analysis end to end`       | Dört canlı OKX kaynağı; canonical report; correlation trace; typed failure; 91 Vitest + 4 invariant; typecheck/lint/build            | C1                        |
 | 2026-10-16 | Codex | C1   | DONE    | `feat: gate every OKX write behind explicit confirmation`   | 6 state-machine testi; ACCEPT-only hazırlık; tek kullanımlık onay; expired/reject/double-submit/network uncertainty; writer gate     | C2                        |
 | 2026-10-16 | Codex | C2   | DONE    | `feat: execute and reconcile confirmed DCD subscription`    | Execution-off 0 çağrı; gerçek CLI request renderer; idempotency; no write retry; order-state reconciliation; server cap; 6 test      | C3/D1                     |
+| 2026-10-16 | Codex | C3   | DONE    | `feat: sell live risk reports through Avalanche x402`       | Gerçek 0,01 Fuji test USDC tx `0xcfd137…c46e`; RPC exact Transfer doğrulaması; canonical paid report; replay/error testleri          | D2                        |
 | 2026-10-16 | Codex | D1   | DONE    | `feat: build resilient live-analysis application shell`     | Strict live wiring; 1280 no-scroll; 1024/390 no horizontal overflow; accessible loading; AA contrast; 10 focused test; repo checks   | D2                        |
 
 ## 7. Yeni agent için devam kontrolü

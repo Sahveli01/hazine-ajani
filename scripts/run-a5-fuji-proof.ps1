@@ -147,7 +147,19 @@ try {
         break
       }
     } catch {
-      Write-Host "Canli analiz henuz uygun proxy bulamadi; yeniden deneniyor ($attempt/8)."
+      $statusCode = $null
+      $responseBody = $_.ErrorDetails.Message
+      if ($_.Exception.Response) {
+        $statusCode = [int]$_.Exception.Response.StatusCode
+      }
+      $diagnostic = if ($responseBody) {
+        "HTTP $statusCode $responseBody"
+      } elseif ($statusCode) {
+        "HTTP $statusCode"
+      } else {
+        $_.Exception.Message
+      }
+      Write-Host "Canli analiz hazir degil ($diagnostic); yeniden deneniyor ($attempt/8)."
       Start-Sleep -Seconds 2
     }
   }
