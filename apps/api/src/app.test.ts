@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { FacilitatorClient } from "@x402/core/server";
+import { pathToFileURL } from "node:url";
 
 import { createApp, isDirectExecution, resolvePort } from "./index.js";
 
@@ -37,13 +38,13 @@ describe("x402 paid risk report route", () => {
     expect(() => resolvePort("0", 3001)).toThrow("port");
     expect(() => resolvePort("not-a-port", 3001)).toThrow("port");
   });
-  it("recognizes a Windows entry path as direct execution", () => {
-    expect(
-      isDirectExecution(
-        "file:///C:/workspace/apps/api/src/index.ts",
-        "C:\\workspace\\apps\\api\\src\\index.ts",
-      ),
-    ).toBe(true);
+  it("recognizes the current platform entry path as direct execution", () => {
+    const entryPoint = process.platform === "win32"
+      ? "C:\\workspace\\apps\\api\\src\\index.ts"
+      : "/workspace/apps/api/src/index.ts";
+    expect(isDirectExecution(pathToFileURL(entryPoint).href, entryPoint)).toBe(
+      true,
+    );
   });
 
   it("keeps health checks public", async () => {
