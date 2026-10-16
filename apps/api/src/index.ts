@@ -15,6 +15,7 @@ import type {
   LiveAnalysisRequest,
   LiveAnalysisResult,
 } from "./analysis-orchestrator.js";
+import { createRuntimeAnalysis } from "./runtime-analysis.js";
 
 type AppConfig = {
   payTo: string;
@@ -76,8 +77,10 @@ export async function createApp({
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
+  const analysis = createRuntimeAnalysis(process.env);
   const app = await createApp({
     payTo: process.env.X402_PAY_TO_ADDRESS ?? "",
+    ...(analysis ? { analysis } : {}),
   });
   serve({ fetch: app.fetch, port: 3001 });
 }

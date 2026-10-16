@@ -555,10 +555,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## D1. Uygulama kabuğu ve canlı durum yüzeylerini oluştur
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: build resilient live-analysis application shell`
+- Kanıt: `docs/evidence/application-shell-2026-10-16.md`; production Playwright loading/error screenshots at 1280×720, 1024×720 and 390×844; strict shared report contract + Next→Hono proxy + runtime wiring dahil 10 focused test; lint/typecheck/build exit 0. Browser gets an immediate accessible loading shell, server-side proxy preserves the credential boundary, and no runtime mock/fallback exists.
 
 **Bitince**
 
@@ -934,6 +934,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | B8   | DONE    | `feat: orchestrate live OKX risk analysis end to end`       | Dört canlı OKX kaynağı; canonical report; correlation trace; typed failure; 91 Vitest + 4 invariant; typecheck/lint/build            | C1                        |
 | 2026-10-16 | Codex | C1   | DONE    | `feat: gate every OKX write behind explicit confirmation`   | 6 state-machine testi; ACCEPT-only hazırlık; tek kullanımlık onay; expired/reject/double-submit/network uncertainty; writer gate     | C2                        |
 | 2026-10-16 | Codex | C2   | DONE    | `feat: execute and reconcile confirmed DCD subscription`    | Execution-off 0 çağrı; gerçek CLI request renderer; idempotency; no write retry; order-state reconciliation; server cap; 6 test      | C3/D1                     |
+| 2026-10-16 | Codex | D1   | DONE    | `feat: build resilient live-analysis application shell`     | Strict live wiring; 1280 no-scroll; 1024/390 no horizontal overflow; accessible loading; AA contrast; 10 focused test; repo checks   | D2                        |
 
 ## 7. Yeni agent için devam kontrolü
 

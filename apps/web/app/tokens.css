@@ -50,8 +50,11 @@
   --type-title: clamp(1.75rem, 3vw, 2.5rem);
   --type-decision: clamp(3rem, 7vw, 5.5rem);
   --line-compact: 1.2;
+  --line-display: 0.98;
   --line-body: 1.5;
+  --tracking-none: 0;
   --tracking-display: -0.02em;
+  --tracking-label: 0.08em;
 
   --weight-regular: 400;
   --weight-medium: 550;
@@ -61,6 +64,23 @@
   --content-max: 80rem;
   --copy-max: 70ch;
   --header-height: 4.5rem;
+  --brand-min-width: 15rem;
+  --status-cell-min-width: 8.75rem;
+  --status-cell-compact-width: 7rem;
+  --account-min-width: 13.5rem;
+  --analysis-panel-min-width: 25rem;
+  --analysis-panel-height: 31rem;
+  --analysis-panel-height-compact: 24rem;
+  --analysis-panel-height-mobile: 25rem;
+  --analysis-id-max-width: 13rem;
+  --hero-copy-max: 40rem;
+  --hero-title: clamp(2.75rem, 5vw, 4.75rem);
+  --breakpoint-tablet: 64rem;
+  --breakpoint-mobile: 44rem;
+  --opacity-muted: 0.72;
+  --opacity-subtle: 0.68;
+  --opacity-skeleton: 0.45;
+  --opacity-skeleton-active: 0.75;
 
   --motion-fast: 200ms;
   --motion-state: 320ms;
