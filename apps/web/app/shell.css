@@ -338,12 +338,13 @@ h1 {
 }
 
 .inspector {
+  min-width: 0;
   width: min(100%, var(--inspector-max));
   margin-inline: auto;
   padding: var(--space-3) var(--space-safe-inline);
   display: grid;
   gap: var(--space-2);
-  overflow-y: auto;
+  overflow: auto hidden;
 }
 .decision-stage {
   background: var(--color-surface-strong);
@@ -665,6 +666,158 @@ h1 {
   outline: var(--stroke-focus) solid var(--color-focus);
   outline-offset: var(--space-1);
 }
+.agent-payment {
+  min-width: 0;
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-2);
+  border: var(--stroke-thin) solid var(--color-border-strong);
+  border-radius: var(--radius-container);
+  background: var(--color-surface-primary);
+}
+.agent-payment-success {
+  border-color: var(--color-success);
+}
+.agent-payment-attention {
+  border-color: var(--color-warning);
+}
+.agent-payment-danger {
+  border-color: var(--color-danger);
+}
+.agent-payment-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.agent-payment-heading > strong {
+  color: var(--color-text-secondary);
+  font-size: var(--type-metadata);
+  letter-spacing: var(--tracking-label);
+}
+.agent-payment-heading > strong {
+  color: var(--color-testnet);
+}
+.agent-payment-heading h2 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin: var(--space-0);
+  font-size: var(--type-title);
+}
+.agent-payment > p {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  margin: var(--space-0);
+  color: var(--color-text-secondary);
+}
+.agent-payment-terms {
+  margin: var(--space-0);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: var(--stroke-thin) solid var(--color-border);
+}
+.agent-payment-terms div {
+  padding: var(--space-2);
+  border-left: var(--stroke-thin) solid var(--color-border);
+}
+.agent-payment-terms div:first-child {
+  border-left: 0;
+}
+.agent-payment dt,
+.agent-payment-receipt > span {
+  color: var(--color-text-secondary);
+  font-size: var(--type-metadata);
+}
+.agent-payment dd {
+  margin: var(--space-1) var(--space-0) var(--space-0);
+  font-weight: var(--weight-semibold);
+}
+.agent-payment-receipt {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.agent-payment-receipt code,
+.agent-payment-report code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+}
+.agent-payment-receipt a {
+  color: var(--color-action);
+  font-weight: var(--weight-semibold);
+}
+.agent-payment-receipt a:focus-visible,
+.agent-payment-report summary:focus-visible,
+.agent-payment-faucet:focus-visible {
+  outline: var(--stroke-focus) solid var(--color-focus);
+  outline-offset: var(--space-1);
+}
+.agent-payment-faucet {
+  color: var(--color-action);
+  font-weight: var(--weight-semibold);
+  width: fit-content;
+}
+.agent-payment-receipt button {
+  min-height: var(--control-min-size);
+  padding-inline: var(--space-2);
+  border: var(--stroke-thin) solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+.agent-payment-receipt button:focus-visible {
+  outline: var(--stroke-focus) solid var(--color-focus);
+  outline-offset: var(--space-1);
+}
+.agent-payment-report {
+  border-top: var(--stroke-thin) solid var(--color-border);
+  padding-top: var(--space-2);
+}
+.agent-payment-report summary {
+  cursor: pointer;
+  font-weight: var(--weight-semibold);
+}
+.agent-payment-report dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+.agent-payment-report pre {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  max-height: var(--analysis-panel-height-mobile);
+  overflow: auto;
+  padding: var(--space-2);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--type-metadata);
+}
+.agent-payment-actions button {
+  min-height: var(--control-min-size);
+  padding-inline: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-action);
+  color: var(--color-text-inverse);
+  font: inherit;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+.agent-payment-actions button:focus-visible {
+  outline: var(--stroke-focus) solid var(--color-focus);
+  outline-offset: var(--space-1);
+}
 @keyframes skeleton-pulse {
   to {
     opacity: var(--opacity-skeleton-active);
@@ -728,7 +881,6 @@ h1 {
     border-top: var(--stroke-thin) solid var(--color-border);
   }
 }
-
 
 @media (max-width: 44rem) {
   .app-shell {
@@ -856,5 +1008,37 @@ h1 {
   }
   .execution-actions {
     flex-direction: column;
+  }
+  .agent-payment-heading {
+    flex-direction: column;
+  }
+  .agent-payment {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .agent-payment > p {
+    inline-size: 30ch;
+    max-inline-size: 100%;
+  }
+  .agent-payment-receipt {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+  .agent-payment-receipt button,
+  .agent-payment-receipt a {
+    max-width: 100%;
+  }
+  .agent-payment-terms,
+  .agent-payment-report dl {
+    grid-template-columns: 1fr;
+  }
+  .agent-payment-terms div {
+    border-left: 0;
+    border-top: var(--stroke-thin) solid var(--color-border);
+  }
+  .agent-payment-terms div:first-child {
+    border-top: 0;
   }
 }

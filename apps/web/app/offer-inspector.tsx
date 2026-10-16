@@ -6,6 +6,7 @@ import type {
 
 import { buildOfferInspectorView } from "./offer-inspector-model";
 import { ExecutionPanel } from "./execution-panel";
+import { AgentPaymentExperience } from "./agent-payment-experience";
 
 const decisionCopy = {
   ACCEPT: {
@@ -236,6 +237,8 @@ export function OfferInspector({ report }: { report: AnalysisReport }) {
       {report.decision === "ACCEPT" ? (
         <ExecutionPanel report={report} state={{ status: "DISABLED" }} />
       ) : null}
+
+      <AgentPaymentExperience report={report} />
     </section>
   );
 }

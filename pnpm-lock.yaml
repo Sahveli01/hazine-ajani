@@ -160,9 +160,21 @@ importers:
 
   apps/web:
     dependencies:
+      '@hazine-ajani/avalanche':
+        specifier: workspace:*
+        version: link:../../packages/avalanche
       '@hazine-ajani/report-schema':
         specifier: workspace:*
         version: link:../../packages/report-schema
+      '@x402/core':
+        specifier: 2.28.0
+        version: 2.28.0
+      '@x402/evm':
+        specifier: 2.28.0
+        version: 2.28.0(typescript@5.9.3)
+      '@x402/fetch':
+        specifier: 2.28.0
+        version: 2.28.0
       next:
         specifier: 16.4.1
         version: 16.4.1(@types/node@22.18.12)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
