@@ -169,7 +169,6 @@ export async function executeBrowserFujiPayment({
       "/api/paid-report",
       { headers: { accept: "application/json" }, cache: "no-store" },
     );
-    const body = (await paidResponse.json()) as unknown;
     const settlementHeader = paidResponse.headers.get("payment-response");
     if (!paidResponse.ok || !settlementHeader) {
       throw new Error(
@@ -194,7 +193,6 @@ export async function executeBrowserFujiPayment({
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        report: body,
         settlement,
         payTo: requirement.payTo,
       }),

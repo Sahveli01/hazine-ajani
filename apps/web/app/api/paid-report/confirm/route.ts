@@ -10,16 +10,19 @@ import {
 } from "viem";
 import { avalancheFuji } from "viem/chains";
 
-import { settlementGuard } from "./settlement-guard";
+import {
+  paidReportStoreFromEnv,
+  type FilePaidReportStore,
+} from "../paid-report-store";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const transferAbi = parseAbi([
   "event Transfer(address indexed from, address indexed to, uint256 value)",
 ]);
 
 type ConfirmationBody = {
-  report: unknown;
   settlement?: {
     success?: boolean;
     network?: string;
@@ -37,6 +40,7 @@ export async function confirmPaidReport(
     chain: avalancheFuji,
     transport: http(AVALANCHE_FUJI.rpcUrl),
   }),
+  store?: FilePaidReportStore,
 ) {
   const settlement = input.settlement;
   if (
@@ -51,14 +55,18 @@ export async function confirmPaidReport(
   ) {
     throw new Error("INVALID_SETTLEMENT");
   }
-  const report = parseAnalysisReport(input.report);
+  const reportStore = store ?? paidReportStoreFromEnv();
+  const report = await reportStore.load(settlement.transaction);
   if (report.x402Payment) throw new Error("ALREADY_PAID");
   const transactionHash = settlement.transaction as `0x${string}`;
-  return settlementGuard.consume(transactionHash, report.analysisId, async () => {
-    const receipt = await client.getTransactionReceipt({ hash: transactionHash });
+  return reportStore.consume(transactionHash, async () => {
+    const receipt = await client.getTransactionReceipt({
+      hash: transactionHash,
+    });
     if (receipt.status !== "success") throw new Error("REVERTED");
     const exactTransfer = receipt.logs.some((log) => {
-      if (!isAddressEqual(log.address, AVALANCHE_FUJI.usdcAddress)) return false;
+      if (!isAddressEqual(log.address, AVALANCHE_FUJI.usdcAddress))
+        return false;
       try {
         const decoded = decodeEventLog({
           abi: transferAbi,
@@ -67,7 +75,10 @@ export async function confirmPaidReport(
           data: log.data,
         });
         return (
-          isAddressEqual(decoded.args.from, settlement.payer as `0x${string}`) &&
+          isAddressEqual(
+            decoded.args.from,
+            settlement.payer as `0x${string}`,
+          ) &&
           isAddressEqual(decoded.args.to, expectedPayTo) &&
           decoded.args.value === 10_000n
         );
@@ -99,11 +110,40 @@ export async function POST(request: Request) {
   try {
     const expectedPayTo = process.env.X402_PAY_TO_ADDRESS;
     if (!expectedPayTo) {
-      return Response.json({ code: "PAYMENT_CONFIG_UNAVAILABLE" }, { status: 503 });
+      return Response.json(
+        { code: "PAYMENT_CONFIG_UNAVAILABLE" },
+        { status: 503 },
+      );
     }
-    return Response.json(await confirmPaidReport((await request.json()) as ConfirmationBody, expectedPayTo));
+    return Response.json(
+      await confirmPaidReport(
+        (await request.json()) as ConfirmationBody,
+        expectedPayTo,
+      ),
+    );
   } catch (error) {
-    const code = error instanceof Error ? error.message : "CONFIRMATION_FAILED";
-    return Response.json({ code }, { status: code === "REVERTED" ? 409 : 422 });
+    const internal = error instanceof Error ? error.message : "";
+    const code = publicConfirmationError(internal);
+    return Response.json(
+      { code },
+      {
+        status:
+          code === "REVERTED" || code === "SETTLEMENT_REPLAY"
+            ? 409
+            : code === "PAYMENT_STORE_UNAVAILABLE"
+              ? 503
+              : 422,
+      },
+    );
   }
+}
+
+export function publicConfirmationError(internal: string) {
+  return internal === "REVERTED"
+    ? "REVERTED"
+    : internal === "SETTLEMENT_REPLAY"
+      ? "SETTLEMENT_REPLAY"
+      : internal === "PAYMENT_STORE_UNAVAILABLE"
+        ? "PAYMENT_STORE_UNAVAILABLE"
+        : "CONFIRMATION_FAILED";
 }

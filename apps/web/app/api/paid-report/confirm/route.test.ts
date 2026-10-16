@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { confirmPaidReport } from "./route.js";
+import { confirmPaidReport, publicConfirmationError } from "./route.js";
 
 describe("paid report server confirmation", () => {
   it("rejects facilitator claims before any RPC call when the network is wrong", async () => {
@@ -17,7 +17,6 @@ describe("paid report server confirmation", () => {
     await expect(
       confirmPaidReport(
         {
-          report: {},
           settlement: {
             success: true,
             network: "eip155:1",
@@ -31,5 +30,11 @@ describe("paid report server confirmation", () => {
       ),
     ).rejects.toThrow("INVALID_SETTLEMENT");
     expect(rpcCalled).toBe(false);
+  });
+
+  it("never exposes secret-bearing RPC or validation messages", () => {
+    expect(
+      publicConfirmationError("rpc failed Authorization: Bearer secret"),
+    ).toBe("CONFIRMATION_FAILED");
   });
 });

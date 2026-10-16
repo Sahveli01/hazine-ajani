@@ -686,10 +686,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## E1. Finansal doğruluk ve güvenlik incelemesi
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `security: verify financial controls and secret boundaries`
+- Kanıt: `docs/evidence/e1-financial-security-review-2026-10-16.md`; bağımsız finansal/güvenlik incelemesi; kanonik paid report server store; restart-safe atomik replay claim; allowlist public errors; `SECURITY.md`; production audit temiz; 179 Vitest+4 invariant; full `pnpm check`
 
 **Bitince**
 
@@ -950,6 +950,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | D3   | DONE    | `feat: ship explicit DCD confirmation and execution states` | Açık onay/iptal; gerçek C1+C2 state eşlemesi; sabit lifecycle paneli; 10 görsel; reviewer ship; 156 Vitest+4 invariant; repo check   | D4                        |
 | 2026-10-16 | Codex | D4   | DONE    | `feat: visualize paid agent-to-agent risk report flow`      | MetaMask+x402; Fuji ağ geçişi; RPC exact Transfer; recipient/replay gate; 4 güncel görsel; reviewer ship; 177 Vitest+4 invariant    | D5                        |
 | 2026-10-16 | Codex | D5   | DONE    | `fix: harden demo UX across access and screen states`       | axe 0 ihlal; 1280/1024/390 taşma yok; Tab 3px odak; reduced motion 0 animasyon; exact aria sayılar; 178 Vitest+4 invariant          | E1                        |
+| 2026-10-16 | Codex | E1   | DONE    | `security: verify financial controls and secret boundaries` | Bağımsız matematik pass; canonical server report; kalıcı atomik replay; error allowlist; SECURITY; audit temiz; 179+4 test          | E2                        |
 
 ## 7. Yeni agent için devam kontrolü
 
@@ -964,4 +965,4 @@ Yeni oturumda şu sıra izlenir:
 7. Acceptance tamamlanana kadar yalnız o adımın kapsamını değiştir.
 8. Verification çalıştır, kanıtı kaydet, commit et, roadmap'i güncelle.
 
-**İlk uygulanacak adım E1'dir.** D5'in erişilebilirlik, responsive, reduced-motion ve tam hassasiyet garantileri korunur; E1 finansal doğruluk, secret sınırları ve write güvenlik kontrollerini bağımsız incelemeyle kapatır.
+**İlk uygulanacak adım E2'dir.** E1'in finansal doğruluk ve güvenlik sınırları korunur; E2 runtime ağacında mock, fixture, dead UI, sahte claim ve kaynaksız sayı bırakmadığını denetler.
