@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   AVALANCHE_FUJI,
+  assertFujiUsdcDomain,
   createFujiPaymentRequirements,
   isAllowedFujiPayment,
 } from "./index.js";
@@ -17,6 +18,8 @@ describe("Avalanche Fuji x402 configuration", () => {
       rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
       explorerUrl: "https://testnet.snowtrace.io",
       usdcAddress: "0x5425890298aed601595a70AB815c96711a31Bc65",
+      usdcName: "USD Coin",
+      usdcVersion: "2",
       facilitatorUrl: "https://facilitator.ultravioletadao.xyz",
     });
   });
@@ -52,7 +55,7 @@ describe("Avalanche Fuji x402 configuration", () => {
       amount: "10000",
       payTo: VALID_TEST_ADDRESS,
       maxTimeoutSeconds: 60,
-      extra: {},
+      extra: { name: "USD Coin", version: "2" },
     };
 
     expect(isAllowedFujiPayment(allowed, VALID_TEST_ADDRESS)).toBe(true);
@@ -71,5 +74,21 @@ describe("Avalanche Fuji x402 configuration", () => {
         VALID_TEST_ADDRESS,
       ),
     ).toBe(false);
+    expect(
+      isAllowedFujiPayment(
+        { ...allowed, extra: { name: "USDC Coin", version: "2" } },
+        VALID_TEST_ADDRESS,
+      ),
+    ).toBe(false);
+  });
+
+  it("fails before signing when live token domain differs from the advertised domain", () => {
+    expect(() => assertFujiUsdcDomain("USD Coin", "2")).not.toThrow();
+    expect(() => assertFujiUsdcDomain("USDC Coin", "2")).toThrow(
+      "Fuji test USDC EIP-712 domain mismatch",
+    );
+    expect(() => assertFujiUsdcDomain("USD Coin", "1")).toThrow(
+      "Fuji test USDC EIP-712 domain mismatch",
+    );
   });
 });

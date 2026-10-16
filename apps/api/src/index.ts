@@ -1,4 +1,5 @@
 import { serve } from "@hono/node-server";
+import { pathToFileURL } from "node:url";
 import {
   AVALANCHE_FUJI,
   createFujiPaymentRequirements,
@@ -20,6 +21,7 @@ import { createRuntimeAnalysis } from "./runtime-analysis.js";
 type AppConfig = {
   payTo: string;
   facilitatorClient?: FacilitatorClient;
+  facilitatorUrl?: string;
   analysis?: {
     request: LiveAnalysisRequest;
     run(request: LiveAnalysisRequest): Promise<LiveAnalysisResult>;
@@ -29,12 +31,15 @@ type AppConfig = {
 export async function createApp({
   payTo,
   facilitatorClient,
+  facilitatorUrl,
   analysis,
 }: AppConfig) {
   const paymentRequirements = createFujiPaymentRequirements(payTo);
   const facilitator =
     facilitatorClient ??
-    new HTTPFacilitatorClient({ url: AVALANCHE_FUJI.facilitatorUrl });
+    new HTTPFacilitatorClient({
+      url: facilitatorUrl ?? AVALANCHE_FUJI.facilitatorUrl,
+    });
   const resourceServer = new x402ResourceServer(facilitator).register(
     AVALANCHE_FUJI.network,
     new ExactEvmScheme(),
@@ -76,11 +81,34 @@ export async function createApp({
   return app;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+export function isDirectExecution(
+  moduleUrl: string,
+  entryPoint: string | undefined,
+): boolean {
+  return (
+    entryPoint !== undefined && moduleUrl === pathToFileURL(entryPoint).href
+  );
+}
+
+export function resolvePort(
+  value: string | undefined,
+  fallback: number,
+): number {
+  const port = value === undefined ? fallback : Number(value);
+  if (!Number.isInteger(port) || port < 1 || port > 65_535) {
+    throw new Error("port must be an integer between 1 and 65535");
+  }
+  return port;
+}
+
+if (isDirectExecution(import.meta.url, process.argv[1])) {
   const analysis = createRuntimeAnalysis(process.env);
   const app = await createApp({
     payTo: process.env.X402_PAY_TO_ADDRESS ?? "",
+    ...(process.env.X402_FACILITATOR_URL
+      ? { facilitatorUrl: process.env.X402_FACILITATOR_URL }
+      : {}),
     ...(analysis ? { analysis } : {}),
   });
-  serve({ fetch: app.fetch, port: 3001 });
+  serve({ fetch: app.fetch, port: resolvePort(process.env.PORT, 3001) });
 }

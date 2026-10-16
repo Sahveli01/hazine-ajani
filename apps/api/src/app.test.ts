@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { FacilitatorClient } from "@x402/core/server";
 
-import { createApp } from "./index.js";
+import { createApp, isDirectExecution, resolvePort } from "./index.js";
 
 const PAY_TO = "0x1111111111111111111111111111111111111111";
 const facilitatorClient: FacilitatorClient = {
@@ -31,6 +31,21 @@ const facilitatorClient: FacilitatorClient = {
 };
 
 describe("x402 paid risk report route", () => {
+  it("accepts a valid dynamic local port and rejects invalid values", () => {
+    expect(resolvePort("34123", 3001)).toBe(34123);
+    expect(resolvePort(undefined, 3001)).toBe(3001);
+    expect(() => resolvePort("0", 3001)).toThrow("port");
+    expect(() => resolvePort("not-a-port", 3001)).toThrow("port");
+  });
+  it("recognizes a Windows entry path as direct execution", () => {
+    expect(
+      isDirectExecution(
+        "file:///C:/workspace/apps/api/src/index.ts",
+        "C:\\workspace\\apps\\api\\src\\index.ts",
+      ),
+    ).toBe(true);
+  });
+
   it("keeps health checks public", async () => {
     const app = await createApp({ payTo: PAY_TO, facilitatorClient });
     const response = await app.request("/health");

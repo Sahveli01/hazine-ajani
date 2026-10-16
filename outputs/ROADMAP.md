@@ -185,10 +185,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## A5. Avalanche Fuji x402 yolunu uçtan uca doğrula — KILL GATE 3
 
-- [ ] Durum: `BLOCKED`
+- [x] Durum: `DONE`
 - Sahip: Codex
-- Commit: `c5fe6e2` (`spike: establish Fuji x402 payment boundary`; settlement checkpoint'i)
-- Kanıt: Canlı Ultravioleta `/supported` yanıtı Fuji `eip155:43113` + test USDC desteğini doğruladı; yerel Hono endpoint gerçek facilitator ile `402` ve `PAYMENT-REQUIRED` döndürdü; 13 Fuji/ağ/API/istemci testi geçiyor. Payer `0x9a2b5BdFd3CA23456957882695Bbf81510430853` henüz test AVAX ve test USDC bakımından boş; gerçek settlement bekliyor.
+- Commit: `spike: prove paid x402 request on Avalanche Fuji`
+- Kanıt: Gerçek x402 v2 `exact` challenge → authorization → settlement → canlı OKX response akışı tamamlandı. Fuji tx `0x5887defa349207d091eaa155fb124ec5c0dacd3438b64322401c9e2447439d19` receipt `success`; payer/alıcı bakiyeleri `0.99/0.01` test USDC. Canlı analiz `ana_192fe2eb04034adaae2c1d49b432f0df`; ayrıntılı public kanıt `outputs/evidence/A5-fuji-x402-settlement.md`.
 
 **Bitince**
 
@@ -914,6 +914,15 @@ Aynı adım üç farklı nedenle başarısız olursa aynı yaklaşım dördünc�
 
 ## 6. İlerleme günlüğü
 
+## Sapma — 2026-10-16, adım A5
+
+Neydi: Fuji x402 settlement için public Ultravioleta facilitator kullanılacaktı.
+Ne çıktı: İki ayrı doğru imza/ödeme denemesinde facilitator `upstream_rpc_unavailable` döndürdü; verdiği transaction hash'leri zincirde bulunmadı ve payer/recipient bakiyeleri 1/0 test USDC kaldı. Resmî x402.org facilitator `/supported` yanıtında Fuji desteği sunmuyor.
+Geri alınan: Public facilitator'a yeni settlement denemesi yapılmayacak; mock veya sahte receipt eklenmeyecek.
+Korunan: x402 v2 exact akışı, Avalanche Fuji, gerçek test USDC, 0,01 tutar, aynı alıcı, kullanıcı onayı ve tx receipt kabul kriteri.
+Yeni plan: Kullanıcının 2026-10-16 onayıyla resmî `@x402/core` ve `@x402/evm` paketlerinden yerel facilitator çalıştırılacak; gerçek Fuji RPC üzerinden on-chain settlement yapılacak. Private key yalnız gizli terminal girişinden yerel facilitator sürecine aktarılacak, dosyaya/loga/API sürecine yazılmayacak. Bulut dağıtımı hackathon sonrası aynı süreç için mümkündür.
+Kesme çizgisi: Yerel facilitator gerçek Fuji receipt üretemezse A5 `BLOCKED` yapılır ve yeni para hareketi denenmez.
+
 Her tamamlanan/engellenen adım için tek satır ekle:
 
 | Tarih      | Agent | Adım | Durum   | Commit                                                      | Doğrulama/kanıt                                                                                                                      | Sonraki adım              |
@@ -923,6 +932,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-15 | Codex | A3   | BLOCKED | —                                                           | OKX TR KYC/API anahtarı onayı bekleniyor; global endpoint veya mock kullanılmadı                                                     | A5; onay gelince A3'e dön |
 | 2026-10-15 | Codex | A3   | DONE    | `spike: verify live OKX TR DCD product access`              | Live TR `pairs` ve BTC/USDT Buy Low `products`; zaman damgalı redakte evidence; güvenli credential/demo failure; erişim ADR'si       | A4                        |
 | 2026-10-15 | Codex | A4   | DONE    | `spike: prove live option proxy for DCD offer`              | Exact strike/vade proxy; 6,5 saniyelik DCD+option snapshot; iki taraflı book, index, IV/Greeks, OI; 5 veri kalite testi              | A5/A6                     |
+| 2026-10-16 | Codex | A5   | DONE    | `spike: prove paid x402 request on Avalanche Fuji`          | Gerçek 0,01 Fuji test USDC settlement; confirmed tx `0x5887…9d19`; canlı OKX paid response; 0.99/0.01 bakiye kanıtı; secret yok      | D2                        |
 | 2026-10-15 | Codex | A6   | DONE    | `design: lock product identity and demo design system`      | PRODUCT/DESIGN; import edilen tokenlar; ekran+Web3 state matrix; Impeccable detector 0; lint/typecheck/22 test/build                 | B1                        |
 | 2026-10-15 | Codex | B1   | DONE    | `feat: define validated financial domain contracts`         | Canonical strict Zod+TS tipleri; decimal/scale/timestamp/version kuralları; 10 contract testi; lint/typecheck/32 test/build          | B2                        |
 | 2026-10-15 | Codex | B2   | DONE    | `feat: normalize live OKX DCD and options data`             | Gerçek public spot/exact option ve private DCD/Simple Earn smoke; 10 adapter testi; typed error/bounded retry/provenance; repo check | B3                        |
