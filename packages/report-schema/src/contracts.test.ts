@@ -132,7 +132,7 @@ describe("canonical financial domain contracts", () => {
     expect(() =>
       parseAnalysisReport({
         ...(validReport() as Record<string, unknown>),
-        apiKey: "must-never-enter-the-domain-report",
+        apiKey: "must-never-enter-the-domain-report", // hack-audit-ok: rejected-field fixture
       }),
     ).toThrow();
   });

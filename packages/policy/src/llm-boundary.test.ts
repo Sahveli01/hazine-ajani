@@ -148,7 +148,7 @@ describe("natural-language policy boundary", () => {
   it("uses Responses structured outputs without sending tools or the API key in the body", async () => {
     let capturedBody = "";
     const provider = new OpenAIResponsesProvider({
-      apiKey: "test-only-secret",
+      apiKey: "test-only-secret", // hack-audit-ok: proves the test secret never enters the request body
       model: "configured-model",
       fetch: (_input, init) => {
         capturedBody = typeof init?.body === "string" ? init.body : "";

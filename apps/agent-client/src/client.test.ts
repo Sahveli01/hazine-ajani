@@ -9,7 +9,7 @@ import {
 } from "./index.js";
 import type { PaidResourceError } from "./index.js";
 
-const TEST_ONLY_PRIVATE_KEY =
+const TEST_ONLY_PRIVATE_KEY = // hack-audit-ok: deterministic invalid test fixture; never imported by runtime
   "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 const EXPECTED_PAY_TO = "0x1111111111111111111111111111111111111111";
 
