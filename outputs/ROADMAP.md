@@ -738,8 +738,8 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 - [ ] Durum: `IN_PROGRESS`
 - Sahip: Codex
-- Commit: —
-- Kanıt: Ara kontrol: E2 `9e3d8ca` ile temiz tamamlandı. E3 yerel hazırlığında `/health` deploy SHA, `/ready` canlı analiz gate'i, korelasyon kimlikli JSON request logu, UI build etiketi ve API production start komutları test edildi. Railway Free hesabı hem CLI hem web'de yeni proje oluşturmayı `trial expired` ile reddetti; kullanıcı 17 Ekim 2026'da Oracle Cloud Always Free VM'e geçişi seçti.
+- Commit: `31200cd`
+- Kanıt: `/health` deploy SHA, `/ready` canlı analiz gate'i, korelasyon kimlikli JSON request logu, UI build etiketi, production süreçleri ve Cloudflare HTTPS launcher hazır. Yerel tam `pnpm check` ve public GitHub CI geçti. Canlı URL doğrulaması güvenli terminalde Fuji test-wallet anahtarının girilmesini bekliyor.
 
 **Bitince**
 
@@ -964,7 +964,8 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | D5   | DONE    | `fix: harden demo UX across access and screen states`       | axe 0 ihlal; 1280/1024/390 taşma yok; Tab 3px odak; reduced motion 0 animasyon; exact aria sayılar; 178 Vitest+4 invariant          | E1                        |
 | 2026-10-16 | Codex | E1   | DONE    | `security: verify financial controls and secret boundaries` | Bağımsız matematik pass; canonical server report; kalıcı atomik replay; error allowlist; SECURITY; audit temiz; 179+4 test          | E2                        |
 | 2026-10-16 | Codex | E2   | DONE    | `audit: remove fake data and dead demo paths`                | Hack-audit 0 blocker/0 warning; runtime mock/fixture yok; dead action yok; gerçek source+timestamp; token bypass yok                | E3                        |
-| 2026-10-17 | Codex | E3   | IN_PROGRESS | — | Health/readiness, deploy SHA, structured log ve build etiketi hazır. Railway/Oracle sapması kapatıldı; resmî local-first yönde tek komutlu production web+API+facilitator+Cloudflare HTTPS akışı hazırlandı. Tam `pnpm check` geçti; canlı URL doğrulaması Fuji key'in güvenli prompt ile girilmesini bekliyor. | Canlı demo komutunu çalıştır ve URL'yi doğrula |
+| 2026-10-17 | Codex | E3   | IN_PROGRESS | `31200cd` | Health/readiness, deploy SHA, structured log ve build etiketi hazır. Railway/Oracle sapması kapatıldı; production web+API+facilitator+Cloudflare HTTPS launcher hazırlandı. Yerel check ve public CI geçti; canlı URL güvenli key girişini bekliyor. | Terminalde key gir; URL'yi doğrula |
+| 2026-10-17 | Codex | E4–E6 hazırlık | IN_PROGRESS | `5e77b8e`, `42150a0`, `6fa8168`, `74b8986` | Public repo HTTP 200 ve `main`; README/runbook/demo/Q&A/MIT/CI hazır; CI run `38969665779` success. Bağımlılık gereği E3 canlı URL, iki prova, video/release ve final audit tamamlanmadan DONE yapılmadı. | Önce E3 canlı kanıt |
 
 ## 7. Yeni agent için devam kontrolü
 
