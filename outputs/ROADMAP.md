@@ -606,10 +606,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## D3. Onay ve execution lifecycle ekranını bitir
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [x] Durum: `DONE`
+- Sahip: Codex
+- Commit: `feat: ship explicit DCD confirmation and execution states`
+- Kanıt: `docs/evidence/d3-confirmation-lifecycle-2026-10-16.md`; 10 güncel lifecycle/mobil karşılaştırma görseli; 14 state testi; Impeccable finish review `ship`
 
 **Bitince**
 
@@ -947,6 +947,7 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | C3   | DONE    | `feat: sell live risk reports through Avalanche x402`       | Gerçek 0,01 Fuji test USDC tx `0xcfd137…c46e`; RPC exact Transfer doğrulaması; canonical paid report; replay/error testleri          | D2                        |
 | 2026-10-16 | Codex | D1   | DONE    | `feat: build resilient live-analysis application shell`     | Strict live wiring; 1280 no-scroll; 1024/390 no horizontal overflow; accessible loading; AA contrast; 10 focused test; repo checks   | D2                        |
 | 2026-10-16 | Codex | D2   | DONE    | `feat: present live DCD risk decision with evidence`        | Canlı OKX report; karar+kanıt+policy+source; 7 final screenshot; detector 0; reviewer ship; 137 Vitest+4 invariant; repo check       | D3                        |
+| 2026-10-16 | Codex | D3   | DONE    | `feat: ship explicit DCD confirmation and execution states` | Açık onay/iptal; gerçek C1+C2 state eşlemesi; sabit lifecycle paneli; 10 görsel; reviewer ship; 156 Vitest+4 invariant; repo check  | D4                        |
 
 ## 7. Yeni agent için devam kontrolü
 
@@ -961,4 +962,4 @@ Yeni oturumda şu sıra izlenir:
 7. Acceptance tamamlanana kadar yalnız o adımın kapsamını değiştir.
 8. Verification çalıştır, kanıtı kaydet, commit et, roadmap'i güncelle.
 
-**İlk uygulanacak adım D3'tür.** D2'nin canlı teklif denetçisi ve state kanıtları korunur; D3 ayrı onay ve execution lifecycle ekranını gerçek state machine ile bağlar.
+**İlk uygulanacak adım D4'tür.** D3'ün açık onay ve execution lifecycle ekranı korunur; D4 gerçek Fuji x402 ödeme ve ücretli rapor receipt akışını ürün ekranına taşır.

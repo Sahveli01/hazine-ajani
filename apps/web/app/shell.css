@@ -350,7 +350,7 @@ h1 {
   color: var(--color-text-inverse);
   border-radius: var(--radius-container);
   padding: var(--space-3);
-  animation: decision-settle var(--motion-state) var(--motion-spring);
+  animation: decision-settle var(--motion-state) var(--motion-ease-out);
 }
 .decision-context {
   display: flex;
@@ -561,6 +561,110 @@ h1 {
   font-size: var(--type-body-lg);
   line-height: var(--line-body);
 }
+.execution-panel {
+  min-height: var(--analysis-panel-height-compact);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: var(--stroke-thin) solid var(--color-border-strong);
+  border-radius: var(--radius-container);
+  background: var(--color-surface-primary);
+}
+.execution-disabled {
+  min-height: auto;
+  background: var(--color-surface-secondary);
+}
+.execution-panel:not(.execution-disabled) {
+  height: calc(var(--analysis-panel-height-compact) + 6rem);
+}
+.execution-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.execution-heading > strong {
+  color: var(--color-text-secondary);
+  font-size: var(--type-metadata);
+  letter-spacing: var(--tracking-label);
+}
+.execution-heading h2 {
+  margin: var(--space-0);
+  font-size: var(--type-title);
+  line-height: var(--line-compact);
+}
+.execution-panel > p {
+  max-width: var(--copy-max);
+  margin: var(--space-2) var(--space-0);
+  color: var(--color-text-secondary);
+  font-size: var(--type-body-lg);
+  line-height: var(--line-body);
+}
+.execution-summary {
+  margin: var(--space-2) var(--space-0);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: var(--stroke-thin) solid var(--color-border);
+}
+.execution-summary div {
+  padding: var(--space-2);
+  border-left: var(--stroke-thin) solid var(--color-border);
+}
+.execution-summary div:nth-child(3n + 1) {
+  border-left: 0;
+}
+.execution-summary div:nth-child(n + 4) {
+  border-top: var(--stroke-thin) solid var(--color-border);
+}
+.execution-summary dt {
+  color: var(--color-text-secondary);
+  font-size: var(--type-metadata);
+}
+.execution-summary dd {
+  margin: var(--space-1) var(--space-0) var(--space-0);
+  font-weight: var(--weight-semibold);
+  line-height: var(--line-compact);
+}
+.execution-reference {
+  margin: var(--space-0);
+  font-size: var(--type-metadata);
+}
+.execution-reference-slot {
+  min-height: calc(2 * var(--line-body) * var(--type-metadata));
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+}
+.execution-reference code {
+  font-family: var(--font-mono);
+}
+.execution-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+.execution-actions button {
+  min-height: var(--control-min-size);
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-control);
+  font: inherit;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+.execution-confirm {
+  border: var(--stroke-thin) solid var(--color-action);
+  background: var(--color-action);
+  color: var(--color-text-inverse);
+}
+.execution-cancel {
+  border: var(--stroke-thin) solid var(--color-border-strong);
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+}
+.execution-actions button:focus-visible {
+  outline: var(--stroke-focus) solid var(--color-focus);
+  outline-offset: var(--space-1);
+}
 @keyframes skeleton-pulse {
   to {
     opacity: var(--opacity-skeleton-active);
@@ -611,7 +715,21 @@ h1 {
   .inspector-lower {
     grid-template-columns: 1fr;
   }
+  .execution-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .execution-summary div:nth-child(3n + 1) {
+    border-left: var(--stroke-thin) solid var(--color-border);
+  }
+  .execution-summary div:nth-child(2n + 1) {
+    border-left: 0;
+  }
+  .execution-summary div:nth-child(n + 3) {
+    border-top: var(--stroke-thin) solid var(--color-border);
+  }
 }
+
+
 @media (max-width: 44rem) {
   .app-shell {
     overflow: visible;
@@ -716,5 +834,27 @@ h1 {
     align-items: flex-start;
     flex-direction: column;
     gap: var(--space-1);
+  }
+  .execution-summary {
+    grid-template-columns: 1fr;
+  }
+  .execution-panel:not(.execution-disabled) {
+    height: auto;
+  }
+  .execution-heading {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .execution-summary div,
+  .execution-summary div:nth-child(3n + 1),
+  .execution-summary div:nth-child(2n + 1) {
+    border-left: 0;
+    border-top: var(--stroke-thin) solid var(--color-border);
+  }
+  .execution-summary div:first-child {
+    border-top: 0;
+  }
+  .execution-actions {
+    flex-direction: column;
   }
 }

@@ -91,6 +91,7 @@
   --motion-fast: 200ms;
   --motion-state: 320ms;
   --motion-slow: 400ms;
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-spring: linear(
     0,
     0.013,
@@ -126,6 +127,7 @@
     --motion-fast: 0ms;
     --motion-state: 0ms;
     --motion-slow: 0ms;
+    --motion-ease-out: linear;
     --motion-spring: linear(0, 1);
   }
 }

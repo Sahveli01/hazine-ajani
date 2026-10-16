@@ -5,6 +5,7 @@ import type {
 } from "@hazine-ajani/report-schema";
 
 import { buildOfferInspectorView } from "./offer-inspector-model";
+import { ExecutionPanel } from "./execution-panel";
 
 const decisionCopy = {
   ACCEPT: {
@@ -232,6 +233,9 @@ export function OfferInspector({ report }: { report: AnalysisReport }) {
           </div>
         </details>
       </div>
+      {report.decision === "ACCEPT" ? (
+        <ExecutionPanel report={report} state={{ status: "DISABLED" }} />
+      ) : null}
     </section>
   );
 }
