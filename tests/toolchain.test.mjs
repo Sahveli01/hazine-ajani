@@ -70,3 +70,11 @@ test("hackathon launcher uses the hosted PayAI Fuji facilitator without a server
   assert.doesNotMatch(launcher, /LOCAL_FACILITATOR_PRIVATE_KEY/);
   assert.doesNotMatch(launcher, /private key/i);
 });
+
+test("obsolete local facilitator runtime is absent", async () => {
+  const apiManifest = await readJson("apps/api/package.json");
+
+  assert.equal(apiManifest.scripts["start:facilitator"], undefined);
+  await assert.rejects(readFile("apps/api/src/local-facilitator.ts", "utf8"));
+  await assert.rejects(readFile("scripts/run-a5-fuji-proof.ps1", "utf8"));
+});
