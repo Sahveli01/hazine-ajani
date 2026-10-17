@@ -103,6 +103,7 @@ export async function createApp({
     context.json({
       status: "ok",
       service: "hazine-ajani-api",
+      okxDiagnostics: "process-output-v1",
       ...(deployment?.commit ? { commit: deployment.commit } : {}),
     }),
   );
