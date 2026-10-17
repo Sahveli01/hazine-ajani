@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   OkxAdapterError,
   createOkxReadAdapter,
+  classifyCliFailure,
   normalizeDcdProducts,
   normalizeOptionMarket,
   normalizeSimpleEarn,
@@ -182,6 +183,18 @@ describe("OKX live payload normalizers", () => {
 });
 
 describe("read boundary", () => {
+  it("classifies OKX diagnostics written outside the process error message", () => {
+    const failure = Object.assign(new Error("Command failed"), {
+      stdout: '{"code":"50038","msg":"DCD Open API feature is disabled"}',
+      stderr: "",
+    });
+
+    expect(classifyCliFailure(failure)).toEqual({
+      code: "AUTH",
+      externalCode: "50038",
+    });
+  });
+
   it("invokes the installed OKX JavaScript entrypoint without a command shell", () => {
     const invocation = resolveOkxCliInvocation();
     expect(invocation.executable).toBe(process.execPath);

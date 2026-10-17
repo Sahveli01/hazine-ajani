@@ -537,6 +537,35 @@ const allowedPrefixes = [
   "option greeks",
 ];
 
+type ProcessFailure = Error & { stdout?: unknown; stderr?: unknown };
+
+export function classifyCliFailure(cause: unknown): {
+  code: OkxAdapterErrorCode;
+  externalCode?: string;
+} {
+  const failure = cause as Partial<ProcessFailure> | undefined;
+  const diagnostics = [failure?.message, failure?.stdout, failure?.stderr]
+    .filter((value): value is string => typeof value === "string")
+    .join("\n");
+  const lower = diagnostics.toLowerCase();
+  const externalCode =
+    diagnostics.match(/(?:"code"\s*:\s*"|\bcode[=: ]+)(\d{5})/i)?.[1];
+  const code: OkxAdapterErrorCode = lower.includes("timed out")
+    ? "TIMEOUT"
+    : lower.includes("429") || lower.includes("rate limit")
+      ? "RATE_LIMIT"
+      : lower.includes("region") || lower.includes("not available")
+        ? "REGIONAL_UNAVAILABLE"
+        : ["50030", "50038", "50110"].includes(externalCode ?? "") ||
+            lower.includes("auth") ||
+            lower.includes("credential") ||
+            lower.includes("whitelist") ||
+            lower.includes("feature is disabled")
+          ? "AUTH"
+          : "CLI_FAILURE";
+  return externalCode ? { code, externalCode } : { code };
+}
+
 export function createCliReadTransport(
   options: { timeoutMs?: number } = {},
 ): OkxReadTransport {
@@ -572,18 +601,7 @@ export function createCliReadTransport(
         );
         return JSON.parse(stdout) as unknown;
       } catch (cause) {
-        const message =
-          cause instanceof Error ? cause.message : "OKX CLI failed";
-        const lower = message.toLowerCase();
-        const code: OkxAdapterErrorCode = lower.includes("timed out")
-          ? "TIMEOUT"
-          : lower.includes("429") || lower.includes("rate limit")
-            ? "RATE_LIMIT"
-            : lower.includes("region") || lower.includes("not available")
-              ? "REGIONAL_UNAVAILABLE"
-              : lower.includes("auth") || lower.includes("credential")
-                ? "AUTH"
-                : "CLI_FAILURE";
+        const { code } = classifyCliFailure(cause);
         throw new OkxAdapterError(code, "OKX read failed", { cause });
       }
     },
