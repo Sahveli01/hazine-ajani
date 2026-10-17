@@ -60,7 +60,7 @@ describe("x402 paid risk report route", () => {
     await expect(response.json()).resolves.toEqual({
       status: "ok",
       service: "hazine-ajani-api",
-      okxDiagnostics: "process-output-v1",
+      okxDiagnostics: "process-output-v2",
       commit: "9e3d8ca",
     });
   });
