@@ -30,6 +30,18 @@ Invoke-RestMethod http://127.0.0.1:3001/ready
 
 The health response identifies the service and Git commit. Readiness is `200` only when the live OKX analysis is configured. Process logs are written below the user's temporary directory under `hazine-ajani-demo`; they contain structured correlation IDs and never contain keys.
 
+## Public paid-agent proof
+
+After the launcher prints the current HTTPS address, open a second PowerShell window. The following command creates a new 0.01 Fuji **test USDC** payment, so obtain explicit approval for that individual payment before running it:
+
+```powershell
+.\scripts\run-public-x402-proof.ps1 -PublicDemoUrl "https://<current-demo>.trycloudflare.com"
+```
+
+Paste the funded test wallet key only into the hidden prompt. The client fails closed unless all of these hold: the server first returns a valid x402 challenge, the token/recipient/amount match the fixed Fuji policy, the paid response carries successful settlement evidence, and Fuji RPC confirms the exact test-USDC `Transfer`. The output contains the canonical live OKX report and Snowtrace transaction URL. Do not redirect this command's output to a file unless the output has first been checked for personal account metadata.
+
+The verified E3 run and transaction are recorded in [`outputs/evidence/E3-public-deployment-and-x402.md`](../outputs/evidence/E3-public-deployment-and-x402.md).
+
 ## Failure recovery
 
 - If the public URL does not appear, confirm `cloudflared --version`, stop the script and restart once.

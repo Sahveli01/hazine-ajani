@@ -69,6 +69,14 @@ pnpm check
 
 Komut private key'i ekranda göstermeyen güvenli prompt ile alır; facilitator, canlı OKX API, production Next.js sunucusu ve ücretsiz HTTPS tünelini başlatır. Terminalde yazan `https://…trycloudflare.com` adresi çalışan demo URL'sidir. Bilgisayar ve terminal jüri demosu boyunca açık kalmalıdır. Ayrıntılar [deployment runbook](docs/DEPLOYMENT.md) içindedir.
 
+Public x402 akışını ikinci bir agent istemcisiyle kanıtlamak için launcher'ın verdiği URL'yi kullanın. Bu komut yeni bir **0,01 Fuji test USDC** ödemesi oluşturur ve bu nedenle her çalıştırmada ayrıca onay gerekir:
+
+```powershell
+.\scripts\run-public-x402-proof.ps1 -PublicDemoUrl "https://<current-demo>.trycloudflare.com"
+```
+
+İstemci private key'i yalnız gizli prompttan alır; başarılı sayılmak için ödeme response header'ını, başarılı Fuji receipt'ini ve doğru test-USDC `Transfer` olayını RPC üzerinden doğrular.
+
 ## Geliştirme ve doğrulama
 
 ```powershell
@@ -97,7 +105,9 @@ Tam politika ve bilinen sınırlar [SECURITY.md](SECURITY.md) içindedir.
 
 ## Kanıtlar
 
-- Gerçek x402 Fuji settlement: [`0x5887…9d19`](https://testnet.snowtrace.io/tx/0x5887defa349207d091eaa155fb124ec5c0dacd3438b64322401c9e2447439d19)
+- Public HTTPS endpoint üzerinden gerçek x402 Fuji settlement: [`0x51bf62…7165`](https://testnet.snowtrace.io/tx/0x51bf626c7590c3f4feb1d70af831428fa9c576135fc6ab8d5e5f04ad69d77165)
+- Public deployment ve ödeme kanıtı: [E3 evidence](outputs/evidence/E3-public-deployment-and-x402.md)
+- İlk yerel x402 Fuji settlement: [`0x5887…9d19`](https://testnet.snowtrace.io/tx/0x5887defa349207d091eaa155fb124ec5c0dacd3438b64322401c9e2447439d19)
 - Ayrıntılı settlement kaydı: [A5 evidence](outputs/evidence/A5-fuji-x402-settlement.md)
 - Güvenlik incelemesi: [E1 review](docs/evidence/e1-financial-security-review-2026-10-16.md)
 - Gerçek veri/dead UI denetimi: [Audit 1](docs/evidence/audit-1.md)
@@ -114,10 +124,10 @@ Anker Protocol, DUAL Finance, Binance Dual Investment Auto-Compound, Volametric,
 - [OKX Agent TradeKit](https://tr.okx.com/en/agent-tradekit)
 - [Agentic Ankara](https://agentic-ankara.vercel.app)
 - [Vibe-coding rehberi](https://agentic-ankara.vercel.app/vibe-coding)
-- [OKX Dual Investment](https://www.okx.com/help/dual-investment-terms-of-service)
+- [OKX Dual Investment product terms](https://www.okx.com/en-us/help/dual-investment-product-service-terms)
 - [Avalanche x402](https://build.avax.network/academy/blockchain/x402-payment-infrastructure/04-x402-on-avalanche/01-why-avalanche)
 - [Avalanche Fuji](https://build.avax.network/academy/blockchain/x402-payment-infrastructure/04-x402-on-avalanche/02-network-setup)
 
 ## Lisans
 
-[MIT](LICENSE)
+[MIT](LICENSE). Kullanılan üçüncü taraf paketler kendi lisansları altında dağıtılır; kesin sürümler `pnpm-lock.yaml` dosyasında sabittir.
