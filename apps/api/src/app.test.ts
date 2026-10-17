@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { FacilitatorClient } from "@x402/core/server";
 import { pathToFileURL } from "node:url";
 
@@ -39,9 +39,10 @@ describe("x402 paid risk report route", () => {
     expect(() => resolvePort("not-a-port", 3001)).toThrow("port");
   });
   it("recognizes the current platform entry path as direct execution", () => {
-    const entryPoint = process.platform === "win32"
-      ? "C:\\workspace\\apps\\api\\src\\index.ts"
-      : "/workspace/apps/api/src/index.ts";
+    const entryPoint =
+      process.platform === "win32"
+        ? "C:\\workspace\\apps\\api\\src\\index.ts"
+        : "/workspace/apps/api/src/index.ts";
     expect(isDirectExecution(pathToFileURL(entryPoint).href, entryPoint)).toBe(
       true,
     );
@@ -132,6 +133,51 @@ describe("x402 paid risk report route", () => {
         amount: "10000",
       }),
     );
+  });
+
+  it("fails before issuing a payment challenge when live analysis is unavailable", async () => {
+    const run = vi.fn().mockResolvedValue({
+      status: "SOURCE_UNAVAILABLE",
+      source: "OKX_OPTION_MARKET",
+      errorCode: "CLI_FAILURE",
+      trace: {
+        analysisId: "ana_failure",
+        correlationId: "cor_failure",
+        events: [],
+      },
+    });
+    const app = await createApp({
+      payTo: PAY_TO,
+      facilitatorClient,
+      analysis: { request: {} as never, run },
+    });
+
+    const response = await app.request("/api/agent/risk-report");
+
+    expect(response.status).toBe(503);
+    expect(response.headers.get("payment-required")).toBeNull();
+    expect(run).toHaveBeenCalledOnce();
+  });
+
+  it("prepares one successful report before the challenge and reuses it briefly", async () => {
+    const run = vi.fn().mockResolvedValue({
+      status: "SUCCESS",
+      report: { analysisId: "ana_prepared" },
+      trace: {
+        analysisId: "ana_prepared",
+        correlationId: "cor_prepared",
+        events: [],
+      },
+    });
+    const app = await createApp({
+      payTo: PAY_TO,
+      facilitatorClient,
+      analysis: { request: {} as never, run: run as never },
+    });
+
+    expect((await app.request("/api/agent/risk-report")).status).toBe(402);
+    expect((await app.request("/api/agent/risk-report")).status).toBe(402);
+    expect(run).toHaveBeenCalledOnce();
   });
 
   it("does not start a paid route without a valid recipient", async () => {

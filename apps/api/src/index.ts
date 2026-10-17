@@ -54,6 +54,26 @@ export async function createApp({
   await resourceServer.initialize();
 
   const app = new Hono();
+  let preparedAnalysis:
+    | {
+        result: Extract<LiveAnalysisResult, { status: "SUCCESS" }>;
+        expiresAt: number;
+      }
+    | undefined;
+
+  const runCanonicalAnalysis = async (): Promise<
+    LiveAnalysisResult | undefined
+  > => {
+    if (!analysis) return undefined;
+    if (preparedAnalysis && preparedAnalysis.expiresAt > Date.now()) {
+      return preparedAnalysis.result;
+    }
+    const result = await analysis.run(analysis.request);
+    if (result.status === "SUCCESS") {
+      preparedAnalysis = { result, expiresAt: Date.now() + 30_000 };
+    }
+    return result;
+  };
 
   app.use("*", async (context, next) => {
     const startedAt = Date.now();
@@ -71,9 +91,9 @@ export async function createApp({
   });
 
   const canonicalAnalysis = async (context: Context) => {
-    if (!analysis)
+    const result = await runCanonicalAnalysis();
+    if (!result)
       return context.json({ status: "ANALYSIS_NOT_CONFIGURED" }, 503);
-    const result = await analysis.run(analysis.request);
     return result.status === "SUCCESS"
       ? context.json(result.report)
       : context.json(result, result.status === "NO_SUITABLE_PROXY" ? 422 : 503);
@@ -92,6 +112,15 @@ export async function createApp({
       : context.json({ status: "not_ready" }, 503),
   );
   app.get("/api/analysis", canonicalAnalysis);
+
+  app.use("/api/agent/risk-report", async (context, next) => {
+    if (!analysis) return next();
+    const result = await runCanonicalAnalysis();
+    if (result?.status === "SUCCESS") return next();
+    return result
+      ? context.json(result, result.status === "NO_SUITABLE_PROXY" ? 422 : 503)
+      : context.json({ status: "ANALYSIS_NOT_CONFIGURED" }, 503);
+  });
 
   app.use(
     paymentMiddleware(
