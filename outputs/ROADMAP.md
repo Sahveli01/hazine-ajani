@@ -789,10 +789,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## E5. Demo provası ve pitch paketi
 
-- [ ] Durum: `TODO`
-- Sahip: —
-- Commit: —
-- Kanıt: —
+- [ ] Durum: `IN_PROGRESS`
+- Sahip: Codex
+- Commit: `demo: add verified live rehearsal fallback package`
+- Kanıt: `docs/evidence/e5-technical-rehearsal-2026-10-17.md`; iki public HTTPS teknik prova geçti (16,98 sn / 17,64 sn), 1280×720 ve 25,04 sn gerçek canlı fallback WebM üretildi, 90 saniyelik pitch + dakika bazlı finalist akışı + recovery/Q&A hazır. Fiziksel yüksek sesli iki prova ve dört metre okunabilirlik kontrolü kullanıcı tarafından yapılmadan adım DONE yapılmayacak.
 
 **Bitince**
 
@@ -966,7 +966,8 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | E2   | DONE    | `audit: remove fake data and dead demo paths`                | Hack-audit 0 blocker/0 warning; runtime mock/fixture yok; dead action yok; gerçek source+timestamp; token bypass yok                | E3                        |
 | 2026-10-17 | Codex | E3   | DONE | `31200cd`, `812ba23`, `20e1695` | Public HTTPS UI + gerçek 402; canlı OKX raporu; gerçek 0,01 Fuji test USDC tx `0x51bf62…7165`; RPC success ve exact 10000 base-unit Transfer | E4 |
 | 2026-10-17 | Codex | E4 | DONE | `docs: finalize reproducible public demo documentation` | README/runbook public ödeme kanıtıyla güncellendi; local link ve format kontrolü; dış kaynak kontrolü; güncel OKX terms; temiz-runner CI + yerel 183 test/build | E5 |
-| 2026-10-17 | Codex | E5–E6 hazırlık | IN_PROGRESS | `42150a0`, `6fa8168`, `74b8986` | Demo/Q&A/MIT/CI hazır; iki zamanlı prova, fallback video, release ve final audit henüz kapanmadı. | E5 demo provası |
+| 2026-10-17 | Codex | E5 | IN_PROGRESS | `demo: add verified live rehearsal fallback package` | İki public teknik prova geçti; gerçek canlı 1280×720 fallback WebM; dakika bazlı pitch/recovery/Q&A hazır. Fiziksel iki anlatımlı prova ve 4 m okunabilirlik kullanıcı kontrolü bekliyor. | Fiziksel prova; sonra E6 |
+| 2026-10-17 | Codex | E6 hazırlık | IN_PROGRESS | `6fa8168`, `74b8986` | Public repo/MIT/CI hazır; release, final audit ve submission receipt henüz kapanmadı. | E5 sonrası final audit |
 
 ## 7. Yeni agent için devam kontrolü
 

@@ -112,6 +112,7 @@ Tam politika ve bilinen sınırlar [SECURITY.md](SECURITY.md) içindedir.
 - Güvenlik incelemesi: [E1 review](docs/evidence/e1-financial-security-review-2026-10-16.md)
 - Gerçek veri/dead UI denetimi: [Audit 1](docs/evidence/audit-1.md)
 - Demo ve Q&A metni: [Demo package](docs/DEMO.md)
+- Gerçek canlı akış fallback kaydı: [1280×720 WebM](outputs/demo/demo-backup.webm)
 - Ürün doğruluk kaynağı: [PROJECT](outputs/PROJECT.md)
 - Uygulama ve devir planı: [ROADMAP](outputs/ROADMAP.md)
 
