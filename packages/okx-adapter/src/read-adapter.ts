@@ -549,7 +549,8 @@ export function classifyCliFailure(cause: unknown): {
     .join("\n");
   const lower = diagnostics.toLowerCase();
   const externalCode =
-    diagnostics.match(/(?:"code"\s*:\s*"|\bcode[=: ]+)(\d{5})/i)?.[1];
+    diagnostics.match(/(?:"code"\s*:\s*"|\bcode[=: ]+)(\d{5})/i)?.[1] ??
+    diagnostics.match(/\b(5\d{4})\b/)?.[1];
   const code: OkxAdapterErrorCode = lower.includes("timed out")
     ? "TIMEOUT"
     : lower.includes("429") || lower.includes("rate limit")

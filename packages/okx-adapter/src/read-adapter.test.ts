@@ -202,6 +202,17 @@ describe("read boundary", () => {
     });
   });
 
+  it("recognizes a bare OKX error number from CLI stderr", () => {
+    const failure = Object.assign(new Error("Command failed"), {
+      stderr: "OKX request failed (50038)",
+    });
+
+    expect(classifyCliFailure(failure)).toEqual({
+      code: "AUTH",
+      externalCode: "50038",
+    });
+  });
+
   it("invokes the installed OKX JavaScript entrypoint without a command shell", () => {
     const invocation = resolveOkxCliInvocation();
     expect(invocation.executable).toBe(process.execPath);
