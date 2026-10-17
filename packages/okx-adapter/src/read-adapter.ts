@@ -566,6 +566,24 @@ export function classifyCliFailure(cause: unknown): {
   return externalCode ? { code, externalCode } : { code };
 }
 
+export function parseCliJson(stdout: string): unknown {
+  try {
+    return JSON.parse(stdout) as unknown;
+  } catch {
+    const objectStart = stdout.indexOf("{");
+    const objectEnd = stdout.lastIndexOf("}");
+    if (objectStart >= 0 && objectEnd > objectStart) {
+      return JSON.parse(stdout.slice(objectStart, objectEnd + 1)) as unknown;
+    }
+    const arrayStart = stdout.indexOf("[");
+    const arrayEnd = stdout.lastIndexOf("]");
+    if (arrayStart >= 0 && arrayEnd > arrayStart) {
+      return JSON.parse(stdout.slice(arrayStart, arrayEnd + 1)) as unknown;
+    }
+    throw new OkxAdapterError("INVALID_PAYLOAD", "OKX CLI returned no JSON");
+  }
+}
+
 export function createCliReadTransport(
   options: { timeoutMs?: number } = {},
 ): OkxReadTransport {
@@ -599,8 +617,9 @@ export function createCliReadTransport(
             maxBuffer: 1_000_000,
           },
         );
-        return JSON.parse(stdout) as unknown;
+        return parseCliJson(stdout);
       } catch (cause) {
+        if (cause instanceof OkxAdapterError) throw cause;
         const { code } = classifyCliFailure(cause);
         throw new OkxAdapterError(code, "OKX read failed", { cause });
       }

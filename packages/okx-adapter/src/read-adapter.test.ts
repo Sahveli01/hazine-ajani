@@ -8,6 +8,7 @@ import {
   normalizeOptionMarket,
   normalizeSimpleEarn,
   normalizeSpotTicker,
+  parseCliJson,
   retryIdempotentRead,
   resolveOkxCliInvocation,
   type OkxReadTransport,
@@ -183,6 +184,12 @@ describe("OKX live payload normalizers", () => {
 });
 
 describe("read boundary", () => {
+  it("parses the JSON document when the CLI prints a non-JSON notice first", () => {
+    expect(
+      parseCliJson('Preparing OKX runtime...\n{"env":"live","data":[]}\n'),
+    ).toEqual({ env: "live", data: [] });
+  });
+
   it("classifies OKX diagnostics written outside the process error message", () => {
     const failure = Object.assign(new Error("Command failed"), {
       stdout: '{"code":"50038","msg":"DCD Open API feature is disabled"}',
