@@ -736,10 +736,10 @@ Bu omurgaya doğrudan hizmet etmeyen iş kesme çizgisinin altındadır.
 
 ## E3. Production deploy ve operasyon kanıtı
 
-- [ ] Durum: `IN_PROGRESS`
+- [x] Durum: `DONE`
 - Sahip: Codex
-- Commit: `31200cd`
-- Kanıt: `/health` deploy SHA, `/ready` canlı analiz gate'i, korelasyon kimlikli JSON request logu, UI build etiketi, production süreçleri ve Cloudflare HTTPS launcher hazır. Yerel tam `pnpm check` ve public GitHub CI geçti. Canlı URL doğrulaması güvenli terminalde Fuji test-wallet anahtarının girilmesini bekliyor.
+- Commit: `31200cd`, `812ba23`, bu adımın kapanış commit'i
+- Kanıt: `outputs/evidence/E3-public-deployment-and-x402.md`; public HTTPS UI ve 402 challenge doğrulandı. Canlı OKX raporu `ana_b4d94ad65e024a4b920b2d8f339a51b9` public endpoint üzerinden gerçek 0,01 Fuji test USDC settlement sonrası döndü. RPC, `0x51bf626c7590c3f4feb1d70af831428fa9c576135fc6ab8d5e5f04ad69d77165` işleminin başarılı olduğunu ve exact `10000` base-unit Transfer'ı doğruladı.
 
 **Bitince**
 
@@ -964,8 +964,8 @@ Her tamamlanan/engellenen adım için tek satır ekle:
 | 2026-10-16 | Codex | D5   | DONE    | `fix: harden demo UX across access and screen states`       | axe 0 ihlal; 1280/1024/390 taşma yok; Tab 3px odak; reduced motion 0 animasyon; exact aria sayılar; 178 Vitest+4 invariant          | E1                        |
 | 2026-10-16 | Codex | E1   | DONE    | `security: verify financial controls and secret boundaries` | Bağımsız matematik pass; canonical server report; kalıcı atomik replay; error allowlist; SECURITY; audit temiz; 179+4 test          | E2                        |
 | 2026-10-16 | Codex | E2   | DONE    | `audit: remove fake data and dead demo paths`                | Hack-audit 0 blocker/0 warning; runtime mock/fixture yok; dead action yok; gerçek source+timestamp; token bypass yok                | E3                        |
-| 2026-10-17 | Codex | E3   | IN_PROGRESS | `31200cd` | Health/readiness, deploy SHA, structured log ve build etiketi hazır. Railway/Oracle sapması kapatıldı; production web+API+facilitator+Cloudflare HTTPS launcher hazırlandı. Yerel check ve public CI geçti; canlı URL güvenli key girişini bekliyor. | Terminalde key gir; URL'yi doğrula |
-| 2026-10-17 | Codex | E4–E6 hazırlık | IN_PROGRESS | `5e77b8e`, `42150a0`, `6fa8168`, `74b8986` | Public repo HTTP 200 ve `main`; README/runbook/demo/Q&A/MIT/CI hazır; CI run `38969665779` success. Bağımlılık gereği E3 canlı URL, iki prova, video/release ve final audit tamamlanmadan DONE yapılmadı. | Önce E3 canlı kanıt |
+| 2026-10-17 | Codex | E3   | DONE | `31200cd`, `812ba23`, kapanış commit'i | Public HTTPS UI + gerçek 402; canlı OKX raporu; gerçek 0,01 Fuji test USDC tx `0x51bf62…7165`; RPC success ve exact 10000 base-unit Transfer | E4 |
+| 2026-10-17 | Codex | E4–E6 hazırlık | IN_PROGRESS | `5e77b8e`, `42150a0`, `6fa8168`, `74b8986` | Public repo HTTP 200 ve `main`; README/runbook/demo/Q&A/MIT/CI hazır; CI run `38969665779` success. E3 canlı URL ve settlement kanıtı tamamlandı; iki prova, video/release ve final audit henüz kapanmadı. | E4 dokümantasyon doğrulaması |
 
 ## 7. Yeni agent için devam kontrolü
 
@@ -980,4 +980,4 @@ Yeni oturumda şu sıra izlenir:
 7. Acceptance tamamlanana kadar yalnız o adımın kapsamını değiştir.
 8. Verification çalıştır, kanıtı kaydet, commit et, roadmap'i güncelle.
 
-**İlk uygulanacak adım E3'tür.** E2'nin gerçek veri ve dead-UI garantileri korunur; E3 web ve API'yi kalıcı storage, secret store, health/readiness ve commit metadata ile production HTTPS ortamına taşır.
+**İlk uygulanacak adım E4'tür.** E3'ün public HTTPS canlı OKX ve gerçek Fuji x402 settlement kanıtı korunur; dokümantasyon gerçek URL/adres/hash ile doğrulanır.
