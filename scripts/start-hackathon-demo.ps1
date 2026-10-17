@@ -74,7 +74,10 @@ try {
     throw "cloudflared bulunamadi. docs/DEPLOYMENT.md kurulum adimini uygula."
   }
   $tsxCli = Join-Path $workspace "node_modules\tsx\dist\cli.mjs"
-  $pnpmCli = (Get-Command pnpm -ErrorAction Stop).Source
+  $nextCli = Join-Path $workspace "apps\web\node_modules\next\dist\bin\next"
+  if (-not (Test-Path -LiteralPath $nextCli)) {
+    throw "Next.js giris dosyasi bulunamadi. Once pnpm install --frozen-lockfile calistir."
+  }
   $commit = (git -C $workspace rev-parse --short HEAD).Trim()
 
   Write-Host "Hazine Ajani canli demo baslatiliyor. Veriler OKX TR'den canli okunur."
@@ -109,7 +112,7 @@ try {
   $env:X402_PAY_TO_ADDRESS = "0x9a2b5BdFd3CA23456957882695Bbf81510430853"
   $env:NEXT_PUBLIC_AVALANCHE_NETWORK = "Avalanche Fuji TESTNET"
   $env:NEXT_PUBLIC_DEPLOY_COMMIT = $commit
-  Start-HiddenProcess $pnpmCli @("--filter", "@hazine-ajani/web", "start", "--", "-p", "3000") "web" | Out-Null
+  Start-HiddenProcess $node @($nextCli, "start", "apps/web", "-p", "3000") "web" | Out-Null
   Wait-Http "http://127.0.0.1:3000" "Web"
 
   $tunnel = Start-HiddenProcess $cloudflared @("tunnel", "--no-autoupdate", "--url", "http://127.0.0.1:3000") "tunnel"
