@@ -1,6 +1,6 @@
 # Hackathon deployment
 
-The event guide and OKX Agent TradeKit documentation describe the current CLI as a local-first tool. Hazine Ajanı therefore keeps the OKX profile, Fuji facilitator key and durable replay store on the demo computer. A Cloudflare Quick Tunnel publishes the complete local Next.js application over HTTPS while the computer remains on during judging.
+The event guide and OKX Agent TradeKit documentation describe the current CLI as a local-first tool. Hazine Ajanı therefore keeps the OKX profile and durable replay store on the demo computer. Fuji settlement uses the hosted PayAI facilitator listed by Avalanche Builder Hub; the API does not hold a facilitator signing key. A Cloudflare Quick Tunnel publishes the complete local Next.js application over HTTPS while the computer remains on during judging.
 
 This is a real deployment path: the browser receives live OKX data from the local API and x402 settlement is executed on Avalanche Fuji. No runtime fixture or cached market response is used. The temporary public URL expires when the demo process stops.
 
@@ -19,7 +19,7 @@ Set-Location "C:\Users\sahve\Documents\Codex\2026-10-15\s"
 .\scripts\start-hackathon-demo.ps1
 ```
 
-Enter only the dedicated Fuji test-wallet private key into the hidden PowerShell prompt. The script starts the facilitator, API, production web server and HTTPS tunnel. It prints the temporary `https://…trycloudflare.com` address after all local health checks pass. Keep that terminal open throughout the demo.
+The launcher does not ask for a wallet private key. It verifies PayAI's live `/supported` response for x402 v2 `exact` on `eip155:43113`, then starts the API, production web server and HTTPS tunnel. It prints the temporary `https://…trycloudflare.com` address after all health checks pass. Keep that terminal open throughout the demo.
 
 ## Operational checks
 
@@ -45,8 +45,9 @@ The verified E3 run and transaction are recorded in [`outputs/evidence/E3-public
 ## Failure recovery
 
 - If the public URL does not appear, confirm `cloudflared --version`, stop the script and restart once.
+- If PayAI preflight fails, inspect `https://facilitator.payai.network/supported`; do not bypass the Fuji v2 exact capability check.
 - If readiness fails, run `okx --profile okx-tr-read account balance` and verify the local OKX profile without printing its secrets.
 - If the live market has no acceptable proxy, show the explicit `NO_SUITABLE_PROXY` state and retry a fresh product. Do not replace it with fixture data.
 - If internet access is lost, use the fallback recording and the already-confirmed Fuji explorer transaction. Clearly state that the recording is evidence from the real flow.
 
-Sources: [event vibe-coding guide](https://agentic-ankara.vercel.app/vibe-coding), [OKX Agent TradeKit](https://tr.okx.com/en/agent-tradekit), [Cloudflare Quick Tunnels](https://developers.cloudflare.com/tunnel/get-started/).
+Sources: [event vibe-coding guide](https://agentic-ankara.vercel.app/vibe-coding), [OKX Agent TradeKit](https://tr.okx.com/en/agent-tradekit), [Avalanche facilitator guide](https://build.avax.network/academy/blockchain/x402-payment-infrastructure/04-x402-on-avalanche/03-facilitators), [PayAI facilitator docs](https://docs.payai.network/x402/facilitators/introduction), [Cloudflare Quick Tunnels](https://developers.cloudflare.com/tunnel/get-started/).

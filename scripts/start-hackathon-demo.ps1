@@ -2,9 +2,9 @@ $ErrorActionPreference = "Stop"
 
 $workspace = Split-Path -Parent $PSScriptRoot
 $processes = [System.Collections.Generic.List[System.Diagnostics.Process]]::new()
-$secretPtr = [IntPtr]::Zero
 $logRoot = Join-Path $env:TEMP "hazine-ajani-demo"
 $stateRoot = Join-Path $workspace "work\demo-state"
+$facilitatorUrl = "https://facilitator.payai.network"
 
 function Wait-Http([string]$Url, [string]$Name) {
   foreach ($attempt in 1..120) {
@@ -25,6 +25,24 @@ function Start-HiddenProcess([string]$File, [string[]]$Arguments, [string]$Name)
     -RedirectStandardOutput $out -RedirectStandardError $err -PassThru
   $processes.Add($process)
   return $process
+}
+
+function Assert-PayAiFujiSupport([string]$Url) {
+  try {
+    $supported = Invoke-RestMethod -Uri "$Url/supported" -Method Get -TimeoutSec 15
+  } catch {
+    throw "PayAI facilitator erisilemiyor: $($_.Exception.Message)"
+  }
+
+  $kinds = @($supported.kinds)
+  $fujiExact = $kinds | Where-Object {
+    $_.x402Version -eq 2 -and
+    $_.scheme -eq "exact" -and
+    $_.network -eq "eip155:43113"
+  }
+  if (-not $fujiExact) {
+    throw "PayAI facilitator Fuji x402 v2 exact destegini ilan etmiyor; demo guvenli bicimde durduruldu."
+  }
 }
 
 $analysisRequest = @{
@@ -81,26 +99,14 @@ try {
   $commit = (git -C $workspace rev-parse --short HEAD).Trim()
 
   Write-Host "Hazine Ajani canli demo baslatiliyor. Veriler OKX TR'den canli okunur."
-  Write-Host "Fuji TESTNET facilitator anahtari ekranda veya loglarda gorunmez."
-  $secureKey = Read-Host "Fonlanan Fuji test cuzdaninin private key'ini gir" -AsSecureString
-  $secretPtr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureKey)
-  $plainKey = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($secretPtr)
-  if ($plainKey -match '^[0-9a-fA-F]{64}$') { $plainKey = "0x$plainKey" }
-  if ($plainKey -notmatch '^0x[0-9a-fA-F]{64}$') { throw "Private key 32-byte hex olmali." }
-
-  $env:LOCAL_FACILITATOR_PRIVATE_KEY = $plainKey
-  $env:PORT = "3002"
-  Start-HiddenProcess $node @($tsxCli, "apps/api/src/local-facilitator.ts") "facilitator" | Out-Null
-  $env:LOCAL_FACILITATOR_PRIVATE_KEY = $null
-  $plainKey = $null
-  $env:PORT = $null
-  Wait-Http "http://127.0.0.1:3002/health" "Facilitator"
+  Assert-PayAiFujiSupport $facilitatorUrl
+  Write-Host "PayAI hosted facilitator hazir: Avalanche Fuji TESTNET, x402 v2 exact."
 
   $env:OKX_READ_PROFILE = "okx-tr-read"
   $env:OKX_SITE = "tr"
   $env:ANALYSIS_REQUEST_JSON = $analysisRequest
   $env:X402_PAY_TO_ADDRESS = "0x9a2b5BdFd3CA23456957882695Bbf81510430853"
-  $env:X402_FACILITATOR_URL = "http://127.0.0.1:3002"
+  $env:X402_FACILITATOR_URL = $facilitatorUrl
   $env:DEPLOY_COMMIT = $commit
   $env:PORT = "3001"
   Start-HiddenProcess $node @($tsxCli, "apps/api/src/index.ts") "api" | Out-Null
@@ -139,11 +145,6 @@ try {
     Start-Sleep -Seconds 5
   }
 } finally {
-  $env:LOCAL_FACILITATOR_PRIVATE_KEY = $null
-  $plainKey = $null
-  if ($secretPtr -ne [IntPtr]::Zero) {
-    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($secretPtr)
-  }
   foreach ($process in $processes) {
     if (-not $process.HasExited) { Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue }
   }

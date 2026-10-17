@@ -61,3 +61,12 @@ test("every planned workspace package has a manifest", async () => {
     assert.equal(packageJson.private, true, `${manifest} must stay private`);
   }
 });
+
+test("hackathon launcher uses the hosted PayAI Fuji facilitator without a server signing key", async () => {
+  const launcher = await readFile("scripts/start-hackathon-demo.ps1", "utf8");
+
+  assert.match(launcher, /https:\/\/facilitator\.payai\.network/);
+  assert.doesNotMatch(launcher, /local-facilitator\.ts/);
+  assert.doesNotMatch(launcher, /LOCAL_FACILITATOR_PRIVATE_KEY/);
+  assert.doesNotMatch(launcher, /private key/i);
+});

@@ -198,15 +198,15 @@ Her tüketici bu sözleşmeyi kullanır. UI'ya özel veya agent-client'a özel a
 
 ## 9. Gerçek veri ve entegrasyon matrisi
 
-| İhtiyaç | Gerçek kaynak | Auth | Kullanım | Başarısızlık davranışı |
-|---|---|---:|---|---|
-| DCD pairs/products/quote | OKX Agent Trade Kit Earn DCD | Evet, live profile | Teklif çekirdeği | Statik payload'a düşme yok; özellik bloklanır |
-| DCD buy/order/redeem | OKX ATK Earn DCD | Evet + açık onay | Opsiyonel canlı icra | Dry-run açıkça etiketlenir veya özellik kesilir |
-| Option instruments/order book/IV/Greeks | OKX public market/options | Public/read | Proxy değerleme | Veri yoksa `INSUFFICIENT_MARKET_DATA` |
-| Spot/index | OKX public market | Public/read | Senaryo ve eşleştirme | Stale ise analiz reddedilir |
-| Simple Earn oranı | OKX Earn | Hesaba göre | Fırsat maliyeti | Erişilemiyorsa metrik `unavailable`; sıfır varsayılmaz |
-| x402 ödeme | Avalanche Fuji + test USDC | Wallet/signature | Agent-to-agent servis | Endpoint ücretsizmiş gibi davranmaz; demo fallback ayrı |
-| Tx doğrulama | Avalanche explorer/RPC | Public | Kanıt | Hash doğrulanmadan “paid” gösterilmez |
+| İhtiyaç                                 | Gerçek kaynak                |               Auth | Kullanım              | Başarısızlık davranışı                                  |
+| --------------------------------------- | ---------------------------- | -----------------: | --------------------- | ------------------------------------------------------- |
+| DCD pairs/products/quote                | OKX Agent Trade Kit Earn DCD | Evet, live profile | Teklif çekirdeği      | Statik payload'a düşme yok; özellik bloklanır           |
+| DCD buy/order/redeem                    | OKX ATK Earn DCD             |   Evet + açık onay | Opsiyonel canlı icra  | Dry-run açıkça etiketlenir veya özellik kesilir         |
+| Option instruments/order book/IV/Greeks | OKX public market/options    |        Public/read | Proxy değerleme       | Veri yoksa `INSUFFICIENT_MARKET_DATA`                   |
+| Spot/index                              | OKX public market            |        Public/read | Senaryo ve eşleştirme | Stale ise analiz reddedilir                             |
+| Simple Earn oranı                       | OKX Earn                     |        Hesaba göre | Fırsat maliyeti       | Erişilemiyorsa metrik `unavailable`; sıfır varsayılmaz  |
+| x402 ödeme                              | Avalanche Fuji + test USDC   |   Wallet/signature | Agent-to-agent servis | Endpoint ücretsizmiş gibi davranmaz; demo fallback ayrı |
+| Tx doğrulama                            | Avalanche explorer/RPC       |             Public | Kanıt                 | Hash doğrulanmadan “paid” gösterilmez                   |
 
 ## 10. OKX gerçekleri ve sınırlar
 
@@ -354,6 +354,8 @@ Uygulama başladığında Impeccable `init` ile `PRODUCT.md`, ardından planın 
 - [Avalanche C-Chain dapp docs](https://build.avax.network/docs/dapps)
 - [Avalanche C-Chain RPC](https://build.avax.network/docs/rpcs/c-chain)
 - [OKX supported-chain matrix](https://web3.okx.com/pt-br/onchainos/dev-docs/home/supported-chain)
+- [PayAI hosted facilitator documentation](https://docs.payai.network/x402/facilitators/introduction)
+- [PayAI live supported capabilities](https://facilitator.payai.network/supported)
 
 ### Finansal doğruluk
 
@@ -380,6 +382,8 @@ Uygulama başladığında Impeccable `init` ile `PRODUCT.md`, ardından planın 
 - `research_notes/Hazine ajanı fikir incelemesi/emsaller.md`
 - `research_notes/Hazine ajanı fikir incelemesi/urun.md`
 - `outputs/Hazine ajanı fikir incelemesi.md`
+- `reports/Avalanche x402 facilitator seçimi.md`
+- `research_notes/Avalanche x402 facilitator seçimi/`
 - `docs/evidence/vibe-coding-guide.md`
 
 ## 16. Agent çalışma ve devir protokolü

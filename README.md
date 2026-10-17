@@ -31,13 +31,13 @@ flowchart LR
   G --> R[Canonical report]
   R --> W[Next.js demo UI]
   R --> X[x402 paid endpoint]
-  X --> F[Fuji facilitator]
+  X --> F[PayAI hosted facilitator]
   F --> C[Avalanche Fuji C-Chain]
   G --> H[Explicit human confirmation]
   H --> E[Minimum-permission OKX writer]
 ```
 
-OKX anahtarı `~/.okx/config.toml` içinde kalır. Tarayıcı, LLM ve Git hiçbir zaman credential görmez. Fuji facilitator anahtarı yalnızca gizli terminal girişinden facilitator sürecine aktarılır. Runtime veya demo kodu mock/fixture import etmez; fixture'lar sadece otomatik testlerde bulunur.
+OKX anahtarı `~/.okx/config.toml` içinde kalır. Tarayıcı, LLM ve Git hiçbir zaman credential görmez. API, Avalanche Builder Hub'ın listesinde yer alan PayAI hosted facilitator ile konuşur; sunucuda facilitator imza anahtarı tutulmaz. Runtime veya demo kodu mock/fixture import etmez; fixture'lar sadece otomatik testlerde bulunur.
 
 ## Gereksinimler
 
@@ -67,7 +67,7 @@ pnpm check
 .\scripts\start-hackathon-demo.ps1
 ```
 
-Komut private key'i ekranda göstermeyen güvenli prompt ile alır; facilitator, canlı OKX API, production Next.js sunucusu ve ücretsiz HTTPS tünelini başlatır. Terminalde yazan `https://…trycloudflare.com` adresi çalışan demo URL'sidir. Bilgisayar ve terminal jüri demosu boyunca açık kalmalıdır. Ayrıntılar [deployment runbook](docs/DEPLOYMENT.md) içindedir.
+Komut önce PayAI'nin canlı `/supported` yanıtında Avalanche Fuji x402 v2 exact desteğini doğrular; ardından canlı OKX API, production Next.js sunucusu ve ücretsiz HTTPS tünelini başlatır. Başlatma sırasında cüzdan anahtarı istenmez. Terminalde yazan `https://…trycloudflare.com` adresi çalışan demo URL'sidir. Bilgisayar ve terminal jüri demosu boyunca açık kalmalıdır. Ayrıntılar [deployment runbook](docs/DEPLOYMENT.md) içindedir.
 
 Public x402 akışını ikinci bir agent istemcisiyle kanıtlamak için launcher'ın verdiği URL'yi kullanın. Bu komut yeni bir **0,01 Fuji test USDC** ödemesi oluşturur ve bu nedenle her çalıştırmada ayrıca onay gerekir:
 
